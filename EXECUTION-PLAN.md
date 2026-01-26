@@ -1,59 +1,68 @@
-# Claude Code Execution Plan — Hours Ledger System
+# Hours Ledger System — Execution Plan
 
-## IMPORTANT CONTEXT
+## Project Structure
 
-This is an **existing project**.
+| Component | Technology | Folder |
+|-----------|------------|--------|
+| Backend | Laravel 12 + PostgreSQL | `/backend` |
+| Frontend | Vue 3 + TailwindCSS v4 | `/frontend` |
 
-- Backend: Laravel (already created)
-- Frontend: Vue 3 + TailwindCSS (already created)
-- Backend folder: /backend
-- Frontend folder: /frontend
-- Backend domain: backend.local
-- Frontend domain: frontend.local
+## Domain Rules (Strict)
 
-❌ Do NOT recreate the applications
-❌ Do NOT change the folder structure
-❌ Do NOT store balances
+- **Append-only ledger** — No deletes, everything is an insertion
+- **No balance column** — Balance calculated via `SUM(ledger_entries.hours)`
+- **Thin controllers** — Business logic in Services
+- **English naming only**
 
-This system follows a **ledger-based model**.
+## Execution Steps
 
----
+| Status | Step | File | Description |
+|--------|------|------|-------------|
+| ✅ | 01 | [STEP-01-domain-model.md](STEP-01-domain-model.md) | Domain modeling and concepts |
+| ✅ | 02 | [STEP-02-database.md](STEP-02-database.md) | Database schema and migrations |
+| ✅ | 03 | [STEP-03-models.md](STEP-03-models.md) | Eloquent models and relationships |
+| ✅ | 04 | [STEP-04-permissions.md](STEP-04-permissions.md) | Permissions and roles (Spatie) |
+| ✅ | 05 | [STEP-05-services.md](STEP-05-services.md) | Business services |
+| ✅ | 06 | [STEP-06-api.md](STEP-06-api.md) | API endpoints |
+| ✅ | 07 | [STEP-07-frontend.md](STEP-07-frontend.md) | Frontend screens |
+| ✅ | 08 | [STEP-08-reports.md](STEP-08-reports.md) | Reports with filters |
+| ✅ | 09 | [STEP-09-validation.md](STEP-09-validation.md) | Validation and consistency |
 
-## EXECUTION STRATEGY
+## Implementation Summary
 
-You MUST execute the steps **in order**.
-Each step must be completed and validated before moving to the next.
+### Backend (`/backend`)
 
-You will receive each step as a separate markdown file.
+**Models**: `Client`, `Wallet`, `LedgerEntry`, `Tag`
 
----
+**Services**:
+- `BalanceCalculatorService` — Calculates balances via SUM
+- `LedgerService` — Creates entries (credit/debit/adjustment)
+- `ReportService` — Filtering and aggregation
 
-## STEPS OVERVIEW
+**API Endpoints**: Clients, Wallets, Ledger Entries, Tags, Reports
 
-1. Domain modeling and concepts
-2. Database schema and migrations
-3. Eloquent models and relationships
-4. Permissions and roles
-5. Business services
-6. API endpoints
-7. Frontend screens
-8. Reports
-9. Validation and consistency checks
+### Frontend (`/frontend`)
 
----
+**Views**: ClientsView, ClientDetailView, WalletDetailView, ReportsView, TagsView
 
-## RULES (STRICT)
+**Composables**: useClients, useWallets, useLedger, useTags, useReports
 
-- Append-only ledger
-- No deletes
-- No balance column
-- Everything is an insertion
-- English naming only
-- Thin controllers
-- Services for logic
+## Setup Commands
 
----
+```bash
+# Backend
+docker compose --env-file .env.docker exec backend composer require spatie/laravel-permission
+docker compose --env-file .env.docker exec backend php artisan vendor:publish --provider="Spatie\Permission\PermissionServiceProvider"
+docker compose --env-file .env.docker exec backend php artisan migrate
+docker compose --env-file .env.docker exec backend php artisan db:seed --class=RolesAndPermissionsSeeder
 
-## START
+# Frontend
+docker compose --env-file .env.docker exec frontend npm install
+```
 
-Wait for **STEP-01-domain-model.md** and execute only what that step describes.
+## Local URLs
+
+| Application | URL |
+|-------------|-----|
+| API | http://api.local.tiagoapps.com.br |
+| Frontend | http://app.local.tiagoapps.com.br |
