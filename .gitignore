@@ -1,0 +1,40 @@
+!.gitignore
+
+# Docker
+/docker-compose.yaml
+/docker-compose.yml
+/.env.docker
+/docker/infra/etc-hosts
+/backend
+/frontend
+/landingpage
+/frontend-backoffice
+/frontend-backoffice-nuxt
+# frontend-backoffice
+# frontend-backoffice-nuxt
+
+/prompt*.md
+/*prompt.md
+
+/prompt-task*.md
+/*prompt-task.md
+
+/notas.md
+
+*.code-workspace
+*no*commit*
+*No*Commit*
+*NO*COMMIT*
+*.bkp.*
+*.localonly.*
+*.bkp
+*.log
+*.swp
+*.out
+*.zip
+_ide_helper*
+.local-aliases.sh
+.claude-session-id
+
+/*session-id*
+/*session_id*

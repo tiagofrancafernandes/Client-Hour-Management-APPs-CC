@@ -1,0 +1,96 @@
+# Laravel Production Dockerfile
+# PHP 8.3 optimized for performance
+
+FROM php:8.3-fpm-alpine AS base
+
+LABEL maintainer="Tiago Apps Production Team"
+LABEL description="Laravel API production environment"
+
+# Install system dependencies
+RUN apk add --no-cache \
+    git \
+    curl \
+    libpng-dev \
+    libjpeg-turbo-dev \
+    freetype-dev \
+    oniguruma-dev \
+    libxml2-dev \
+    postgresql-dev \
+    libzip-dev \
+    icu-dev \
+    zip \
+    unzip \
+    supervisor \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install \
+        pdo \
+        pdo_pgsql \
+        pgsql \
+        mbstring \
+        exif \
+        pcntl \
+        bcmath \
+        gd \
+        zip \
+        intl \
+        opcache \
+    && pecl install redis \
+    && docker-php-ext-enable redis \
+    && rm -rf /var/cache/apk/*
+
+# Install Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+# PHP production configuration
+RUN cp "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
+
+# Custom PHP configuration for production
+COPY ./docker/laravel/php-prod.ini /usr/local/etc/php/conf.d/99-custom.ini
+
+# Create application directory
+WORKDIR /var/www/html
+
+# -----------------------------------------------------------
+# Build stage - Install dependencies and optimize
+# -----------------------------------------------------------
+FROM base AS build
+
+# Copy application files
+COPY --chown=www-data:www-data ./backend /var/www/html
+
+# Install PHP dependencies (no dev)
+RUN composer install \
+    --no-dev \
+    --no-interaction \
+    --prefer-dist \
+    --optimize-autoloader \
+    --no-progress \
+    --no-scripts
+
+# Generate optimized autoload files
+RUN composer dump-autoload --optimize --classmap-authoritative
+
+# -----------------------------------------------------------
+# Production stage
+# -----------------------------------------------------------
+FROM base AS production
+
+# Copy application from build stage
+COPY --from=build --chown=www-data:www-data /var/www/html /var/www/html
+
+# Set proper permissions
+RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache \
+    && chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
+
+# Switch to non-root user
+USER www-data
+
+# Expose PHP-FPM port
+EXPOSE 9000
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+    CMD php-fpm-healthcheck || exit 1
+
+# Default command
+CMD ["php-fpm"]

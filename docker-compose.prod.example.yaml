@@ -1,0 +1,312 @@
+# Tiago Apps Docker Compose - Production Environment
+# =============================================
+#
+# Usage:
+#   1. Copy this file to docker-compose.yaml
+#   2. Copy .env.docker.example to .env.docker and configure production values
+#   3. Build images: docker compose build
+#   4. Run: docker compose up -d
+#
+# Note: In production, frontend apps are built as static files or SSR servers
+
+name: tiagoapps-prod
+
+services:
+    # ===========================================
+    # Infrastructure Services
+    # ===========================================
+
+    # Nginx Reverse Proxy
+    nginx:
+        image: nginx:alpine
+        container_name: tiagoapps-nginx
+        restart: always
+        ports:
+            - "${NGINX_HTTP_PORT:-80}:80"
+            - "${NGINX_HTTPS_PORT:-443}:443"
+        volumes:
+            - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+            - ./docker/nginx/api.conf:/etc/nginx/conf.d/api.conf:ro
+            - ./docker/nginx/landingpage.conf:/etc/nginx/conf.d/landingpage.conf:ro
+            - ./docker/nginx/frontend.conf:/etc/nginx/conf.d/frontend.conf:ro
+            - ./docker/nginx/backoffice.conf:/etc/nginx/conf.d/backoffice.conf:ro
+            - ./backend/public:/var/www/html/backend/public:ro
+            - nginx-logs:/var/log/nginx
+            # SSL certificates (uncomment in production)
+            # - ./docker/ssl/certs:/etc/nginx/ssl:ro
+        depends_on:
+            backend:
+                condition: service_healthy
+        networks:
+            tiagoapps-network:
+                aliases:
+                    - local.tiagoapps.com.br
+                    - app.local.tiagoapps.com.br
+                    - admin.local.tiagoapps.com.br
+                    - api.local.tiagoapps.com.br
+        healthcheck:
+            test: ["CMD", "nginx", "-t"]
+            interval: 30s
+            timeout: 10s
+            retries: 3
+
+    # PostgreSQL Database
+    postgres:
+        image: postgres:16-alpine
+        container_name: tiagoapps-postgres
+        restart: always
+        ports:
+            - "${POSTGRES_PORT:-5432}:5432"
+        environment:
+            POSTGRES_USER: ${POSTGRES_USER}
+            POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+            POSTGRES_DB: ${POSTGRES_DB}
+            PGDATA: /var/lib/postgresql/data/pgdata
+        volumes:
+            - postgres-data:/var/lib/postgresql/data
+        networks:
+            - tiagoapps-network
+        healthcheck:
+            test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+            interval: 10s
+            timeout: 5s
+            retries: 5
+        deploy:
+            resources:
+                limits:
+                    memory: 1G
+
+    # Redis Cache
+    redis:
+        image: redis:7-alpine
+        container_name: tiagoapps-redis
+        restart: always
+        command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD} --maxmemory 256mb --maxmemory-policy allkeys-lru
+        volumes:
+            - redis-data:/data
+        networks:
+            - tiagoapps-network
+        healthcheck:
+            test: ["CMD", "redis-cli", "-a", "${REDIS_PASSWORD}", "ping"]
+            interval: 10s
+            timeout: 5s
+            retries: 5
+        deploy:
+            resources:
+                limits:
+                    memory: 512M
+
+    # ===========================================
+    # Application Services
+    # ===========================================
+
+    # Laravel Backend API
+    backend:
+        build:
+            context: .
+            dockerfile: ./docker/laravel/Dockerfile.prod
+        container_name: tiagoapps-backend
+        restart: always
+        volumes:
+            - ./backend/storage:/var/www/html/storage
+            - php-logs:/var/log/php
+        environment:
+            APP_ENV: production
+            APP_DEBUG: "false"
+            APP_URL: ${APP_URL}
+            DB_CONNECTION: pgsql
+            DB_HOST: postgres
+            DB_PORT: 5432
+            DB_DATABASE: ${POSTGRES_DB}
+            DB_USERNAME: ${POSTGRES_USER}
+            DB_PASSWORD: ${POSTGRES_PASSWORD}
+            REDIS_HOST: redis
+            REDIS_PASSWORD: ${REDIS_PASSWORD}
+            REDIS_PORT: 6379
+            CACHE_DRIVER: redis
+            SESSION_DRIVER: redis
+            QUEUE_CONNECTION: redis
+            # Domain environment variables
+            SAAS_DOMAIN: ${SAAS_DOMAIN}
+            CUSTOMER_APP_DOMAIN: ${CUSTOMER_APP_DOMAIN}
+            BACKOFFICE_DOMAIN: ${BACKOFFICE_DOMAIN}
+            API_DOMAIN: ${API_DOMAIN}
+        depends_on:
+            postgres:
+                condition: service_healthy
+            redis:
+                condition: service_healthy
+        networks:
+            - tiagoapps-network
+        healthcheck:
+            test: ["CMD-SHELL", "php-fpm-healthcheck || exit 1"]
+            interval: 30s
+            timeout: 10s
+            retries: 3
+        deploy:
+            resources:
+                limits:
+                    memory: 512M
+
+    # Vue 3 Customer Frontend (Production - Static files served by Nginx)
+    frontend:
+        build:
+            context: .
+            dockerfile: ./docker/node/Dockerfile.vue.prod
+        container_name: tiagoapps-frontend
+        restart: always
+        networks:
+            - tiagoapps-network
+        healthcheck:
+            test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost/health"]
+            interval: 30s
+            timeout: 10s
+            retries: 3
+        deploy:
+            resources:
+                limits:
+                    memory: 128M
+
+    # Nuxt 4 Landing Page (Production - SSR)
+    landingpage:
+        build:
+            context: .
+            dockerfile: ./docker/node/Dockerfile.nuxt.prod
+            args:
+                APP_PATH: landingpage
+        container_name: tiagoapps-landingpage
+        restart: always
+        environment:
+            NODE_ENV: production
+            NUXT_PUBLIC_API_URL: ${API_URL}
+            NUXT_PUBLIC_APP_URL: ${SAAS_URL}
+            NUXT_PUBLIC_SAAS_DOMAIN: ${SAAS_DOMAIN}
+            NUXT_PUBLIC_CUSTOMER_APP_DOMAIN: ${CUSTOMER_APP_DOMAIN}
+            NUXT_PUBLIC_BACKOFFICE_DOMAIN: ${BACKOFFICE_DOMAIN}
+            NUXT_PUBLIC_API_DOMAIN: ${API_DOMAIN}
+        networks:
+            - tiagoapps-network
+        healthcheck:
+            test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:3000/"]
+            interval: 30s
+            timeout: 10s
+            retries: 3
+        deploy:
+            resources:
+                limits:
+                    memory: 256M
+
+    # Nuxt 4 Backoffice (Production - SSR)
+    backoffice:
+        build:
+            context: .
+            dockerfile: ./docker/node/Dockerfile.nuxt.prod
+            args:
+                APP_PATH: frontend-backoffice
+        container_name: tiagoapps-backoffice
+        restart: always
+        environment:
+            NODE_ENV: production
+            NUXT_PUBLIC_API_URL: ${API_URL}
+            NUXT_PUBLIC_APP_URL: ${BACKOFFICE_URL}
+            NUXT_PUBLIC_SAAS_DOMAIN: ${SAAS_DOMAIN}
+            NUXT_PUBLIC_CUSTOMER_APP_DOMAIN: ${CUSTOMER_APP_DOMAIN}
+            NUXT_PUBLIC_BACKOFFICE_DOMAIN: ${BACKOFFICE_DOMAIN}
+            NUXT_PUBLIC_API_DOMAIN: ${API_DOMAIN}
+        networks:
+            - tiagoapps-network
+        healthcheck:
+            test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:3000/"]
+            interval: 30s
+            timeout: 10s
+            retries: 3
+        deploy:
+            resources:
+                limits:
+                    memory: 256M
+
+    # ===========================================
+    # Workers
+    # ===========================================
+
+    # Laravel Queue Worker
+    queue-worker:
+        build:
+            context: .
+            dockerfile: ./docker/laravel/Dockerfile.prod
+        container_name: tiagoapps-queue-worker
+        restart: always
+        volumes:
+            - ./backend/storage:/var/www/html/storage
+        environment:
+            APP_ENV: production
+            DB_CONNECTION: pgsql
+            DB_HOST: postgres
+            DB_PORT: 5432
+            DB_DATABASE: ${POSTGRES_DB}
+            DB_USERNAME: ${POSTGRES_USER}
+            DB_PASSWORD: ${POSTGRES_PASSWORD}
+            REDIS_HOST: redis
+            REDIS_PASSWORD: ${REDIS_PASSWORD}
+            REDIS_PORT: 6379
+        command: php artisan queue:work --sleep=3 --tries=3 --max-time=3600
+        depends_on:
+            backend:
+                condition: service_healthy
+        networks:
+            - tiagoapps-network
+        deploy:
+            resources:
+                limits:
+                    memory: 256M
+
+    # Laravel Scheduler
+    scheduler:
+        build:
+            context: .
+            dockerfile: ./docker/laravel/Dockerfile.prod
+        container_name: tiagoapps-scheduler
+        restart: always
+        volumes:
+            - ./backend/storage:/var/www/html/storage
+        environment:
+            APP_ENV: production
+            DB_CONNECTION: pgsql
+            DB_HOST: postgres
+            DB_PORT: 5432
+            DB_DATABASE: ${POSTGRES_DB}
+            DB_USERNAME: ${POSTGRES_USER}
+            DB_PASSWORD: ${POSTGRES_PASSWORD}
+            REDIS_HOST: redis
+            REDIS_PASSWORD: ${REDIS_PASSWORD}
+            REDIS_PORT: 6379
+        command: sh -c "while true; do php artisan schedule:run --verbose --no-interaction; sleep 60; done"
+        depends_on:
+            backend:
+                condition: service_healthy
+        networks:
+            - tiagoapps-network
+        deploy:
+            resources:
+                limits:
+                    memory: 128M
+
+# ===========================================
+# Networks
+# ===========================================
+networks:
+    tiagoapps-network:
+        driver: bridge
+
+# ===========================================
+# Volumes
+# ===========================================
+volumes:
+    postgres-data:
+        driver: local
+    redis-data:
+        driver: local
+    nginx-logs:
+        driver: local
+    php-logs:
+        driver: local

@@ -1,0 +1,44 @@
+# Tiago Apps Docker Hosts File
+# =======================
+#
+# This file can be mounted to containers to override DNS resolution.
+# Copy to etc-hosts and uncomment the volume mount in docker-compose.yaml
+#
+# Usage in docker-compose.yaml:
+#   volumes:
+#     - ./docker/infra/etc-hosts:/etc/hosts:ro
+#
+# Note: For development, you also need to add these entries to your
+# HOST MACHINE's /etc/hosts file to access the services from your browser:
+#
+# sudo nano /etc/hosts
+# Add the following lines:
+# 127.0.0.1 local.tiagoapps.com.br
+# 127.0.0.1 app.local.tiagoapps.com.br
+# 127.0.0.1 admin.local.tiagoapps.com.br
+# 127.0.0.1 api.local.tiagoapps.com.br
+
+# Default entries (required)
+127.0.0.1       localhost
+::1             localhost ip6-localhost ip6-loopback
+fe00::0         ip6-localnet
+ff00::0         ip6-mcastprefix
+ff02::1         ip6-allnodes
+ff02::2         ip6-allrouters
+
+# Tiago Apps Local Development Domains
+# These resolve to the nginx container within Docker network
+127.0.0.1       local.tiagoapps.com.br
+127.0.0.1       app.local.tiagoapps.com.br
+127.0.0.1       admin.local.tiagoapps.com.br
+127.0.0.1       api.local.tiagoapps.com.br
+
+# Service hostnames (for inter-container communication)
+# These use Docker's internal DNS, but can be overridden here if needed
+# nginx           nginx
+# postgres        postgres
+# redis           redis
+# backend         backend
+# frontend        frontend
+# landingpage     landingpage
+# backoffice      backoffice

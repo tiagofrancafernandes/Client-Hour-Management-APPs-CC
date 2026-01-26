@@ -1,0 +1,77 @@
+# Laravel Development Dockerfile
+# PHP 8.3 with development tools and hot-reload support
+
+FROM php:8.3-fpm
+
+LABEL maintainer="Tiago Apps Development Team"
+LABEL description="Laravel API development environment"
+
+# Arguments for user configuration
+ARG USER_ID=1000
+ARG GROUP_ID=1000
+ARG USERNAME=www-data
+
+# Environment variables
+ENV COMPOSER_ALLOW_SUPERUSER=1
+ENV COMPOSER_HOME=/composer
+ENV PATH="${PATH}:/composer/vendor/bin"
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    git \
+    curl \
+    libpng-dev \
+    libjpeg-dev \
+    libfreetype6-dev \
+    libonig-dev \
+    libxml2-dev \
+    libpq-dev \
+    libzip-dev \
+    libicu-dev \
+    zip \
+    unzip \
+    supervisor \
+    procps \
+    nano \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install \
+        pdo \
+        pdo_pgsql \
+        pgsql \
+        mbstring \
+        exif \
+        pcntl \
+        bcmath \
+        gd \
+        zip \
+        intl \
+        opcache \
+    && pecl install redis xdebug \
+    && docker-php-ext-enable redis xdebug \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+# Create composer directory
+RUN mkdir -p /composer && chmod -R 777 /composer
+
+# PHP development configuration
+RUN cp "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini"
+
+# Custom PHP configuration for development
+COPY ./docker/laravel/php-dev.ini /usr/local/etc/php/conf.d/99-custom.ini
+
+# Create application directory
+WORKDIR /var/www/html
+
+# Configure user permissions (match host user)
+RUN usermod -u ${USER_ID} www-data 2>/dev/null || true \
+    && groupmod -g ${GROUP_ID} www-data 2>/dev/null || true
+
+# Expose PHP-FPM port
+EXPOSE 9000
+
+# Default command
+CMD ["php-fpm"]

@@ -1,0 +1,25 @@
+# Nuxt 4 Development Dockerfile
+# Node.js with hot-reload support
+
+FROM node:22-alpine
+
+LABEL maintainer="Tiago Apps Development Team"
+LABEL description="Nuxt 4 development environment"
+
+# Install system dependencies
+RUN apk add --no-cache \
+    git \
+    curl \
+    bash
+
+# Create app directory
+WORKDIR /app
+
+# Create node_modules directory with proper permissions
+RUN mkdir -p /app/node_modules && chmod 777 /app/node_modules
+
+# Expose Nuxt dev server port
+EXPOSE 3000
+
+# Default command (can be overridden in docker-compose)
+CMD ["sh", "-c", "npm install && npm run dev -- --host 0.0.0.0"]
