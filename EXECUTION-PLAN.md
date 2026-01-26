@@ -1,4 +1,4 @@
-# Cloud Code Execution Plan — Hours Ledger System
+# Claude Code Execution Plan — Hours Ledger System
 
 ## IMPORTANT CONTEXT
 
