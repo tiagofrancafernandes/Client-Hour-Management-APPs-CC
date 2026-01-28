@@ -11,5 +11,5 @@ CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 -- Add any additional initialization here
 
 -- Example: Create additional databases for testing
--- CREATE DATABASE mkpay_test;
--- GRANT ALL PRIVILEGES ON DATABASE mkpay_test TO tiagoapps;
+-- CREATE DATABASE f2apps_test;
+-- GRANT ALL PRIVILEGES ON DATABASE f2apps_test TO tiagoapps;

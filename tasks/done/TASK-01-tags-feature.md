@@ -110,12 +110,12 @@ Já existentes no seeder:
 
 ## Critérios de Aceite
 
-- [ ] Tags podem ser criadas e gerenciadas via API
-- [ ] Ledger entries podem ter múltiplas tags associadas
-- [ ] Frontend permite selecionar tags existentes
-- [ ] Frontend permite criar tags inline (vírgula/enter)
-- [ ] Relatórios podem ser filtrados por tags
-- [ ] Testes automatizados cobrem funcionalidades principais
+- [x] Tags podem ser criadas e gerenciadas via API
+- [x] Ledger entries podem ter múltiplas tags associadas
+- [x] Frontend permite selecionar tags existentes
+- [x] Frontend permite criar tags inline (vírgula/enter)
+- [x] Relatórios podem ser filtrados por tags
+- [x] Testes automatizados cobrem funcionalidades principais
 
 ---
 

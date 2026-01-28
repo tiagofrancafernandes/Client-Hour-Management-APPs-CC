@@ -555,28 +555,28 @@ gunzip -c backup.sql.gz | docker compose --env-file .env.docker exec -T postgres
 
 ```bash
 # Conectar ao Redis CLI
-docker compose --env-file .env.docker exec redis redis-cli -a mkpay_redis
+docker compose --env-file .env.docker exec redis redis-cli -a f2apps_redis
 
 # Executar comando diretamente
-docker compose --env-file .env.docker exec redis redis-cli -a mkpay_redis PING
+docker compose --env-file .env.docker exec redis redis-cli -a f2apps_redis PING
 
 # Listar todas as chaves
-docker compose --env-file .env.docker exec redis redis-cli -a mkpay_redis KEYS "*"
+docker compose --env-file .env.docker exec redis redis-cli -a f2apps_redis KEYS "*"
 
 # Obter valor de uma chave
-docker compose --env-file .env.docker exec redis redis-cli -a mkpay_redis GET "chave"
+docker compose --env-file .env.docker exec redis redis-cli -a f2apps_redis GET "chave"
 
 # Limpar todo o cache
-docker compose --env-file .env.docker exec redis redis-cli -a mkpay_redis FLUSHALL
+docker compose --env-file .env.docker exec redis redis-cli -a f2apps_redis FLUSHALL
 
 # Limpar apenas o banco atual
-docker compose --env-file .env.docker exec redis redis-cli -a mkpay_redis FLUSHDB
+docker compose --env-file .env.docker exec redis redis-cli -a f2apps_redis FLUSHDB
 
 # Ver estatísticas
-docker compose --env-file .env.docker exec redis redis-cli -a mkpay_redis INFO
+docker compose --env-file .env.docker exec redis redis-cli -a f2apps_redis INFO
 
 # Monitorar comandos em tempo real
-docker compose --env-file .env.docker exec redis redis-cli -a mkpay_redis MONITOR
+docker compose --env-file .env.docker exec redis redis-cli -a f2apps_redis MONITOR
 ```
 
 ---
@@ -797,7 +797,7 @@ docker compose --env-file .env.docker exec frontend npm install
 
 # Ou remover o volume e recriar
 docker compose --env-file .env.docker down
-docker volume rm mkpay_frontend-node-modules
+docker volume rm f2apps_frontend-node-modules
 docker compose --env-file .env.docker up -d frontend
 ```
 
@@ -888,10 +888,10 @@ docker compose --env-file .env.docker up -d
 | `NGINX_HTTP_PORT` | Porta HTTP do Nginx | 80 |
 | `NGINX_HTTPS_PORT` | Porta HTTPS do Nginx | 443 |
 | `POSTGRES_USER` | Usuário PostgreSQL | tiagoapps |
-| `POSTGRES_PASSWORD` | Senha PostgreSQL | mkpay_secret |
+| `POSTGRES_PASSWORD` | Senha PostgreSQL | f2apps_secret |
 | `POSTGRES_DB` | Nome do banco | tiagoapps |
 | `POSTGRES_PORT` | Porta PostgreSQL | 5432 |
-| `REDIS_PASSWORD` | Senha Redis | mkpay_redis |
+| `REDIS_PASSWORD` | Senha Redis | f2apps_redis |
 | `REDIS_PORT` | Porta Redis | 6379 |
 | `FRONTEND_PORT` | Porta do frontend Vue (acesso direto) | 5173 |
 | `LANDINGPAGE_PORT` | Porta da landing page (acesso direto) | 3000 |

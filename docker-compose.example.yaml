@@ -64,7 +64,7 @@ services:
             - "${POSTGRES_PORT:-5432}:5432"
         environment:
             POSTGRES_USER: ${POSTGRES_USER:-tiagoapps}
-            POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-mkpay_secret}
+            POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-f2apps_secret}
             POSTGRES_DB: ${POSTGRES_DB:-tiagoapps}
             PGDATA: /var/lib/postgresql/data/pgdata
         volumes:
@@ -85,13 +85,13 @@ services:
         restart: unless-stopped
         ports:
             - "${REDIS_PORT:-6379}:6379"
-        command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD:-mkpay_redis}
+        command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD:-f2apps_redis}
         volumes:
             - redis-data:/data
         networks:
             - tiagoapps-network
         healthcheck:
-            test: ["CMD", "redis-cli", "-a", "${REDIS_PASSWORD:-mkpay_redis}", "ping"]
+            test: ["CMD", "redis-cli", "-a", "${REDIS_PASSWORD:-f2apps_redis}", "ping"]
             interval: 10s
             timeout: 5s
             retries: 5
@@ -125,9 +125,9 @@ services:
             DB_PORT: 5432
             DB_DATABASE: ${POSTGRES_DB:-tiagoapps}
             DB_USERNAME: ${POSTGRES_USER:-tiagoapps}
-            DB_PASSWORD: ${POSTGRES_PASSWORD:-mkpay_secret}
+            DB_PASSWORD: ${POSTGRES_PASSWORD:-f2apps_secret}
             REDIS_HOST: redis
-            REDIS_PASSWORD: ${REDIS_PASSWORD:-mkpay_redis}
+            REDIS_PASSWORD: ${REDIS_PASSWORD:-f2apps_redis}
             REDIS_PORT: 6379
             CACHE_DRIVER: redis
             SESSION_DRIVER: redis
@@ -261,9 +261,9 @@ services:
             DB_PORT: 5432
             DB_DATABASE: ${POSTGRES_DB:-tiagoapps}
             DB_USERNAME: ${POSTGRES_USER:-tiagoapps}
-            DB_PASSWORD: ${POSTGRES_PASSWORD:-mkpay_secret}
+            DB_PASSWORD: ${POSTGRES_PASSWORD:-f2apps_secret}
             REDIS_HOST: redis
-            REDIS_PASSWORD: ${REDIS_PASSWORD:-mkpay_redis}
+            REDIS_PASSWORD: ${REDIS_PASSWORD:-f2apps_redis}
             REDIS_PORT: 6379
         command: php artisan queue:work --sleep=3 --tries=3 --max-time=3600
         depends_on:
@@ -294,9 +294,9 @@ services:
             DB_PORT: 5432
             DB_DATABASE: ${POSTGRES_DB:-tiagoapps}
             DB_USERNAME: ${POSTGRES_USER:-tiagoapps}
-            DB_PASSWORD: ${POSTGRES_PASSWORD:-mkpay_secret}
+            DB_PASSWORD: ${POSTGRES_PASSWORD:-f2apps_secret}
             REDIS_HOST: redis
-            REDIS_PASSWORD: ${REDIS_PASSWORD:-mkpay_redis}
+            REDIS_PASSWORD: ${REDIS_PASSWORD:-f2apps_redis}
             REDIS_PORT: 6379
         command: sh -c "while true; do php artisan schedule:run --verbose --no-interaction; sleep 60; done"
         depends_on:

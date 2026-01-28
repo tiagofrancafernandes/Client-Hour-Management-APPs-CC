@@ -105,10 +105,10 @@ docker compose --env-file .env.docker exec postgres pg_dump -U tiagoapps tiagoap
 
 ```bash
 # Conectar ao Redis CLI
-docker compose --env-file .env.docker exec redis redis-cli -a mkpay_redis
+docker compose --env-file .env.docker exec redis redis-cli -a f2apps_redis
 
 # Limpar cache
-docker compose --env-file .env.docker exec redis redis-cli -a mkpay_redis FLUSHALL
+docker compose --env-file .env.docker exec redis redis-cli -a f2apps_redis FLUSHALL
 ```
 
 ---

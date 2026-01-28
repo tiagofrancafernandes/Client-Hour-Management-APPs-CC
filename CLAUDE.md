@@ -81,10 +81,10 @@ docker compose --env-file .env.docker exec frontend npm run dev
 ### Database
 ```bash
 # PostgreSQL CLI
-docker compose --env-file .env.docker exec postgres psql -U mkpay -d mkpay
+docker compose --env-file .env.docker exec postgres psql -U f2apps -d f2apps
 
 # Backup
-docker compose --env-file .env.docker exec postgres pg_dump -U mkpay mkpay > backup.sql
+docker compose --env-file .env.docker exec postgres pg_dump -U f2apps f2apps > backup.sql
 ```
 
 ### View Logs
