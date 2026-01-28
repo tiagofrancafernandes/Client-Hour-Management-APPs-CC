@@ -121,6 +121,36 @@ Direct ports: Frontend `:5173`, Landing `:3000`, Backoffice `:3001`
 - Object syntax for conditional classes (no ternary in `:class`)
 - API-driven, no business logic in components
 
+## UI Design Reference
+
+**All frontend components must follow the design system specification:**
+
+**`frontend/design/design.json`**
+
+### Design System
+
+The design system file contains comprehensive UI specifications:
+- **Color Palette**: Primary red (#dc2626), neutral grays, status colors
+- **Typography**: Font families, sizes, and weights
+- **Components**: Buttons, cards, inputs, tables, badges, navigation
+- **Spacing & Layout**: Consistent spacing scale and border radius values
+- **Responsive Design**: Breakpoints and mobile/desktop layouts
+
+### Key Design Principles
+
+1. **Primary Color**: Red (#dc2626) for brand elements, actions, and active states
+2. **Component Style**: Rounded corners, subtle shadows, generous whitespace
+3. **Responsive**: Mobile-first with bottom navigation, desktop with sidebar
+4. **Consistency**: Maintain uniform spacing, colors, and component styles
+
+**Refer to `frontend/design/design.json` when:**
+- Implementing new UI components
+- Styling forms, buttons, or navigation
+- Choosing colors or spacing values
+- Creating responsive layouts
+
+See `frontend/CLAUDE.md` for detailed frontend guidelines and path aliases.
+
 ## Code Style Guideline (Mandatory)
 
 All code generated, modified, or refactored **must strictly follow** the rules defined in:
