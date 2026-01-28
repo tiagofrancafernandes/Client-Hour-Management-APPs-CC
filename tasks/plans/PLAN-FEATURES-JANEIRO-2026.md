@@ -14,8 +14,8 @@ Implementar 4 novas funcionalidades no sistema de gestão de horas:
 
 | Status | Priority | File | Description |
 |--------|----------|------|-------------|
-| ⬜ | 01 | [TASK-01-tags-feature.md](../todo/TASK-01-tags-feature.md) | Feature de tags (backend + frontend) |
-| ⬜ | 02 | [TASK-02-report-export.md](../todo/TASK-02-report-export.md) | Exportação de relatórios PDF/Excel |
+| ✅ | 01 | [TASK-01-tags-feature.md](../done/TASK-01-tags-feature.md) | Feature de tags (backend + frontend) |
+| ✅ | 02 | [TASK-02-report-export.md](../done/TASK-02-report-export.md) | Exportação de relatórios PDF/Excel |
 | ⬜ | 03 | [TASK-03-timer-feature.md](../todo/TASK-03-timer-feature.md) | Timer para registro de horas |
 | ⬜ | 04 | [TASK-04-import-records.md](../todo/TASK-04-import-records.md) | Importação de registros CSV/XLSX |
 

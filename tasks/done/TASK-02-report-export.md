@@ -154,13 +154,13 @@ Usar permissão existente:
 
 ## Critérios de Aceite
 
-- [ ] Endpoint de exportação funciona com filtros
-- [ ] Excel gerado contém todas as colunas necessárias
-- [ ] PDF gerado tem layout profissional
-- [ ] PDF inclui resumo e filtros aplicados
-- [ ] Frontend permite escolher formato de exportação
-- [ ] Exportação respeita os filtros aplicados na tela
-- [ ] Arquivos são nomeados com data/hora da geração
+- [x] Endpoint de exportação funciona com filtros
+- [x] Excel gerado contém todas as colunas necessárias
+- [x] PDF gerado tem layout profissional
+- [x] PDF inclui resumo e filtros aplicados
+- [x] Frontend permite escolher formato de exportação
+- [x] Exportação respeita os filtros aplicados na tela
+- [x] Arquivos são nomeados com data/hora da geração
 
 ---
 
