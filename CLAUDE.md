@@ -127,6 +127,20 @@ Direct ports: Frontend `:5173`, Landing `:3000`, Backoffice `:3001`
 
 **`frontend/design/design.json`**
 
+## Front toast messages
+
+```ts
+import { useToast } from '@/composables/useToast';
+
+const toast = useToast();
+
+toast.success('success!');
+toast.error('error!');
+toast.info('info!');
+toast.dark('dark!');
+toast.warning('warning!');
+```
+
 ### Design System
 
 The design system file contains comprehensive UI specifications:
