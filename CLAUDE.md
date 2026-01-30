@@ -163,7 +163,7 @@ The design system file contains comprehensive UI specifications:
 - Choosing colors or spacing values
 - Creating responsive layouts
 
-See `frontend/CLAUDE.md` for detailed frontend guidelines and path aliases.
+See @frontend/CLAUDE.md for detailed frontend guidelines and path aliases.
 
 ## Code Style Guideline (Mandatory)
 
