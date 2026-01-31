@@ -141,6 +141,56 @@ toast.dark('dark!');
 toast.warning('warning!');
 ```
 
+### Toast messages
+
+```ts
+import { useToast } from '@/composables/useToast';
+
+const toast = useToast();
+
+toast.success('success!');
+toast.error('error!');
+toast.info('info!');
+toast.dark('dark!');
+toast.warning('warning!');
+```
+
+## Using buttons
+To use <button> preffer use global `CButton` component (`src/components/CButton.vue` not need import this) and use presets to style
+Example:
+```vue
+<template>
+<CButton preset="outlined-black" class="inline-flex items-center">
+    Unlock
+</CButton>
+</template>
+```
+
+## Using Custom Components (src/components/C*.vue file)
+
+Example:
+```vue
+<template>
+<!-- src/components/CButton.vue -->
+ <CButton label="My Button label" />
+
+<!-- src/components/CDropZone.vue -->
+ <CDropZone label="My DropZone label" />
+
+<!-- src/components/CInput.vue -->
+ <CInput label="My Input label" />
+
+<!-- src/components/CSelect.vue -->
+ <CSelect label="My Select label"  >
+
+    <option>Opção</option>
+ </CSelect>
+<!-- src/components/CTextarea.vue -->
+ <CTextarea label="My Textarea label" />
+
+</template>
+```
+
 ### Design System
 
 The design system file contains comprehensive UI specifications:
