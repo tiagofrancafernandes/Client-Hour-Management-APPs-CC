@@ -323,14 +323,14 @@ onUnmounted(() => {
 
 ## Critérios de Aceite
 
-- [ ] Timer pode ser iniciado com wallet selecionada
-- [ ] Timer pode ser pausado e retomado (cria novos ciclos)
-- [ ] Balão flutuante aparece quando timer está ativo
-- [ ] Ao parar, modal de confirmação permite ajustar ciclos
-- [ ] Confirmar cria ledger entry com horas calculadas
-- [ ] Cancelar descarta timer sem criar débito
-- [ ] Apenas 1 timer ativo por usuário (backend valida)
-- [ ] Tela de listagem de timers funciona
+- [x] Timer pode ser iniciado com wallet selecionada
+- [x] Timer pode ser pausado e retomado (cria novos ciclos)
+- [x] Balão flutuante aparece quando timer está ativo
+- [x] Ao parar, modal de confirmação permite ajustar ciclos
+- [x] Confirmar cria ledger entry com horas calculadas
+- [x] Cancelar descarta timer sem criar débito
+- [x] Apenas 1 timer ativo por usuário (backend valida)
+- [x] Tela de listagem de timers funciona
 - [ ] Não é possível excluir wallet com timer ativo
 - [ ] Testes automatizados cobrem fluxos principais
 
@@ -356,3 +356,21 @@ onUnmounted(() => {
   - `TimerCycleEditor.vue`
 - View: `TimersListView.vue`
 - Rota: `/timers`
+
+---
+
+## Hotfixes Aplicados
+
+### 31/01/2026 - Correção de Reatividade
+
+**Problema**: Balão flutuante não aparecia e modal de confirmação não funcionava
+
+**Arquivo**: [TASK-03-HOTFIX-timer-reactivity.md](TASK-03-HOTFIX-timer-reactivity.md)
+
+**Resumo**:
+- Corrigido código não-reativo em `TimerFloatingBalloon.vue` (linhas 98-106)
+- Corrigido código não-reativo em `TimerConfirmModal.vue` (linhas 107-109)
+- Adicionados `watch` para observar mudanças em `hasTimer`, `timer` e `props`
+- Sistema de timer agora funciona completamente
+
+**Commit**: `e771d24`
