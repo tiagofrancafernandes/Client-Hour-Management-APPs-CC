@@ -1,7 +1,7 @@
 # TASK-02-07 — Hide Client Selector and Auto-Filter Reports for Customers
 
 ## STATUS
-⬜ TODO
+✅ DONE
 
 ## RELATED PLAN
 [PLAN-TASK-02-customer-login.md](../plans/PLAN-TASK-02-customer-login.md) - Step 09-10

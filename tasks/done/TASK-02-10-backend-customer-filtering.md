@@ -1,7 +1,7 @@
 # TASK-02-10 — Implement Backend Customer Filtering in Endpoints
 
 ## STATUS
-⬜ TODO
+✅ DONE
 
 ## RELATED PLAN
 [PLAN-TASK-02-customer-login.md](../plans/PLAN-TASK-02-customer-login.md) - Step 04-06

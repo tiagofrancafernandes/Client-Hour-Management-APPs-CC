@@ -1,7 +1,7 @@
 # TASK-02-04 — Implement Wallet Query Scope for Customer Filtering
 
 ## STATUS
-⬜ TODO
+✅ DONE
 
 ## RELATED PLAN
 [PLAN-TASK-02-customer-login.md](../plans/PLAN-TASK-02-customer-login.md) - Step 06

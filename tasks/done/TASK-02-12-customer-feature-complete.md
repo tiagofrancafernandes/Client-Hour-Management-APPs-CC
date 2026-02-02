@@ -1,7 +1,7 @@
 # TASK-02-12 — Customer Login Feature Completion and Documentation
 
 ## STATUS
-⬜ TODO
+✅ DONE
 
 ## RELATED PLAN
 [PLAN-TASK-02-customer-login.md](../plans/PLAN-TASK-02-customer-login.md) - Complete

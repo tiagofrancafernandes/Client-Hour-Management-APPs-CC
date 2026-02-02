@@ -1,7 +1,7 @@
 # TASK-02-03 — Add Customer Association Check to Client Model
 
 ## STATUS
-⬜ TODO
+✅ DONE
 
 ## RELATED PLAN
 [PLAN-TASK-02-customer-login.md](../plans/PLAN-TASK-02-customer-login.md) - Step 05

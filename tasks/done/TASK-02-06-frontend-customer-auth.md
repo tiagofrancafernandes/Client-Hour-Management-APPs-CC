@@ -1,7 +1,7 @@
 # TASK-02-06 — Detect Customer Role in Frontend Auth System
 
 ## STATUS
-⬜ TODO
+✅ DONE
 
 ## RELATED PLAN
 [PLAN-TASK-02-customer-login.md](../plans/PLAN-TASK-02-customer-login.md) - Step 08

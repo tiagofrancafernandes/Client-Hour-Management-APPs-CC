@@ -1,7 +1,7 @@
 # TASK-02-11 — Test Customer Data Isolation and Access Control
 
 ## STATUS
-⬜ TODO
+✅ DONE
 
 ## RELATED PLAN
 [PLAN-TASK-02-customer-login.md](../plans/PLAN-TASK-02-customer-login.md) - Step 12

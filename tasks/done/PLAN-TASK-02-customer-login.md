@@ -21,18 +21,18 @@ Enable clients to have associated user accounts that can login and access custom
 
 | Status | Step | Description |
 |--------|------|-------------|
-| ⬜ | 01 | Add `customer_id` column to users table (foreign key to clients) |
-| ⬜ | 02 | Create 'customer' role in permissions/roles system |
-| ⬜ | 03 | Define customer permissions (report.view, wallet.view, etc.) |
-| ⬜ | 04 | Update UserController to allow customer user creation during client registration |
-| ⬜ | 05 | Add customer association check in Client model |
-| ⬜ | 06 | Implement wallet query scope to filter by customer's client |
-| ⬜ | 07 | Implement report query scope to filter by customer's client |
-| ⬜ | 08 | Update frontend auth system to detect customer role |
-| ⬜ | 09 | Hide client selector in reports view for customers |
-| ⬜ | 10 | Auto-filter wallets to customer's client in reports view |
-| ⬜ | 11 | Create customer login view with simplified UI |
-| ⬜ | 12 | Test customer access restrictions and data filtering |
+| ✅ | 01 | Add `customer_id` column to users table (foreign key to clients) |
+| ✅ | 02 | Create 'customer' role in permissions/roles system |
+| ✅ | 03 | Define customer permissions (report.view, wallet.view, etc.) |
+| ✅ | 04 | Update UserController to allow customer user creation during client registration |
+| ✅ | 05 | Add customer association check in Client model |
+| ✅ | 06 | Implement wallet query scope to filter by customer's client |
+| ✅ | 07 | Implement report query scope to filter by customer's client |
+| ✅ | 08 | Update frontend auth system to detect customer role |
+| ✅ | 09 | Hide client selector in reports view for customers |
+| ✅ | 10 | Auto-filter wallets to customer's client in reports view |
+| ✅ | 11 | Create customer login view with simplified UI |
+| ✅ | 12 | Test customer access restrictions and data filtering |
 
 ---
 

@@ -1,7 +1,7 @@
 # TASK-02-08 — Auto-Filter Clients List for Customer View
 
 ## STATUS
-⬜ TODO
+✅ DONE
 
 ## RELATED PLAN
 [PLAN-TASK-02-customer-login.md](../plans/PLAN-TASK-02-customer-login.md) - Step 09

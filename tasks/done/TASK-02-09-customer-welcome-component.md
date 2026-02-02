@@ -1,7 +1,7 @@
 # TASK-02-09 — Create Customer Welcome/Dashboard Component
 
 ## STATUS
-⬜ TODO
+✅ DONE
 
 ## RELATED PLAN
 [PLAN-TASK-02-customer-login.md](../plans/PLAN-TASK-02-customer-login.md) - Step 11
