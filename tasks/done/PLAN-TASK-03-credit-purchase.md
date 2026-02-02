@@ -22,23 +22,23 @@ Create a complete credit purchase workflow:
 
 | Status | Step | Description |
 |--------|------|-------------|
-| ⬜ | 01 | Add `credit_purchase_allowed` column to wallets table |
-| ⬜ | 02 | Create credit purchase permission |
-| ⬜ | 03 | Create CreditPurchase model and relationships |
-| ⬜ | 04 | Create CreditPurchasePayment model for payment tracking |
-| ⬜ | 05 | Create CreditPurchaseController with store/show endpoints |
-| ⬜ | 06 | Create payment type validation and enum |
-| ⬜ | 07 | Implement Pix Offline receipt upload storage |
-| ⬜ | 08 | Create PaymentApprovalController for admin approval |
-| ⬜ | 09 | Implement credit application logic (LedgerEntry creation on approval) |
-| ⬜ | 10 | Create frontend multi-step modal component |
-| ⬜ | 11 | Implement step 1: package selection with calculations |
-| ⬜ | 12 | Implement step 2: review summary with total |
-| ⬜ | 13 | Implement step 3: payment method selection |
-| ⬜ | 14 | Implement file upload for Pix Offline |
-| ⬜ | 15 | Create payment history/status view for customer |
-| ⬜ | 16 | Create admin payment approval view |
-| ⬜ | 17 | Test complete purchase flow and payment tracking |
+| ✅ | 01 | Add `credit_purchase_allowed` column to wallets table |
+| ✅ | 02 | Create credit purchase permission |
+| ✅ | 03 | Create CreditPurchase model and relationships |
+| ✅ | 04 | Create CreditPurchasePayment model for payment tracking |
+| ✅ | 05 | Create CreditPurchaseController with store/show endpoints |
+| ✅ | 06 | Create payment type validation and enum |
+| ✅ | 07 | Implement Pix Offline receipt upload storage |
+| ✅ | 08 | Create PaymentApprovalController for admin approval |
+| ✅ | 09 | Implement credit application logic (LedgerEntry creation on approval) |
+| ✅ | 10 | Create frontend multi-step modal component |
+| ✅ | 11 | Implement step 1: package selection with calculations |
+| ✅ | 12 | Implement step 2: review summary with total |
+| ✅ | 13 | Implement step 3: payment method selection |
+| ✅ | 14 | Implement file upload for Pix Offline |
+| ✅ | 15 | Create payment history/status view for customer |
+| ✅ | 16 | Create admin payment approval view |
+| ✅ | 17 | Test complete purchase flow and payment tracking |
 
 ---
 
@@ -76,3 +76,8 @@ Create a complete credit purchase workflow:
 - Test file upload for Pix Offline
 - Verify admin approval creates ledger entry
 - Verify customer sees correct payment status
+
+### Aditional files and Tasks
+- [ ] [TASK-03-01-credit-purchase-migrations.md](./TASK-03-01-credit-purchase-migrations.md)
+- [ ] [TASK-03-02-credit-purchase-models.md](./TASK-03-02-credit-purchase-models.md)
+- [ ] [TASK-03-credit-purchase.md](./TASK-03-credit-purchase.md)

@@ -1,7 +1,7 @@
 # TASK-03-02 — Create Credit Purchase Models
 
 ## STATUS
-⬜ TODO
+✅ DONE
 
 ## RELATED PLAN
 [PLAN-TASK-03-credit-purchase.md](../plans/PLAN-TASK-03-credit-purchase.md) - Step 03-04
