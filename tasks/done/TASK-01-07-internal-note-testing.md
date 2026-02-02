@@ -1,7 +1,7 @@
 # TASK-01-07 — Test Internal Note Feature End-to-End
 
 ## STATUS
-⬜ TODO
+✅ DONE
 
 ## RELATED PLAN
 [PLAN-TASK-01-internal-note.md](../plans/PLAN-TASK-01-internal-note.md) - Step 07

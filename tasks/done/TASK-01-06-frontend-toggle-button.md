@@ -1,7 +1,7 @@
 # TASK-01-06 — Add Internal Note Toggle Button in Wallet Detail View
 
 ## STATUS
-⬜ TODO
+✅ DONE
 
 ## RELATED PLAN
 [PLAN-TASK-01-internal-note.md](../plans/PLAN-TASK-01-internal-note.md) - Step 06

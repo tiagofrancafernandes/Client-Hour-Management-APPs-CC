@@ -1,7 +1,7 @@
 # TASK-01-05 — Update useWallets Composable for Internal Note
 
 ## STATUS
-⬜ TODO
+✅ DONE
 
 ## RELATED PLAN
 [PLAN-TASK-01-internal-note.md](../plans/PLAN-TASK-01-internal-note.md) - Step 05

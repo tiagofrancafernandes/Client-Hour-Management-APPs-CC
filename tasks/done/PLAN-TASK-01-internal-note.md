@@ -22,21 +22,21 @@ Add a new `internal_note` column to the wallets table that:
 |--------|------|-------------|
 | ✅ | 01 | Create migration to add `internal_note` column to wallets table |
 | ✅ | 02 | Add permission `wallet.view_internal_note` to role definitions |
-| ⬜ | 03 | Update Wallet model to handle hidden attributes based on permission |
-| ⬜ | 04 | Modify WalletController to filter response based on user permission |
-| ⬜ | 05 | Update useWallets composable to handle internal_note visibility |
-| ⬜ | 06 | Add toggle button and state management in wallet detail view |
-| ⬜ | 07 | Test permission enforcement and frontend toggle |
+| ✅ | 03 | Update Wallet model to handle hidden attributes based on permission |
+| ✅ | 04 | Modify WalletController to filter response based on user permission |
+| ✅ | 05 | Update useWallets composable to handle internal_note visibility |
+| ✅ | 06 | Add toggle button and state management in wallet detail view |
+| ✅ | 07 | Test permission enforcement and frontend toggle |
 
 ## Tasks
 
-- ✅ [TASK-01-01-internal-note-migration.md](../done/TASK-01-01-internal-note-migration.md) - COMPLETED
-- ✅ [TASK-01-02-internal-note-permission.md](../done/TASK-01-02-internal-note-permission.md) - COMPLETED
-- ⬜ [TASK-01-03-wallet-model-update.md](../todo/TASK-01-03-wallet-model-update.md)
-- ⬜ [TASK-01-04-wallet-controller-update.md](../todo/TASK-01-04-wallet-controller-update.md)
-- ⬜ [TASK-01-05-usewallets-composable-update.md](../todo/TASK-01-05-usewallets-composable-update.md)
-- ⬜ [TASK-01-06-frontend-toggle-button.md](../todo/TASK-01-06-frontend-toggle-button.md)
-- ⬜ [TASK-01-07-internal-note-testing.md](../todo/TASK-01-07-internal-note-testing.md)
+- ✅ [TASK-01-01-internal-note-migration.md](./TASK-01-01-internal-note-migration.md) - COMPLETED
+- ✅ [TASK-01-02-internal-note-permission.md](./TASK-01-02-internal-note-permission.md) - COMPLETED
+- ✅ [TASK-01-03-wallet-model-update.md](./TASK-01-03-wallet-model-update.md) - COMPLETED
+- ✅ [TASK-01-04-wallet-controller-update.md](./TASK-01-04-wallet-controller-update.md) - COMPLETED
+- ✅ [TASK-01-05-usewallets-composable-update.md](./TASK-01-05-usewallets-composable-update.md) - COMPLETED
+- ✅ [TASK-01-06-frontend-toggle-button.md](./TASK-01-06-frontend-toggle-button.md) - COMPLETED
+- ✅ [TASK-01-07-internal-note-testing.md](./TASK-01-07-internal-note-testing.md) - COMPLETED
 
 ---
 
