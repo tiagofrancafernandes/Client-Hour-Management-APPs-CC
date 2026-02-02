@@ -77,7 +77,21 @@ Create a complete credit purchase workflow:
 - Verify admin approval creates ledger entry
 - Verify customer sees correct payment status
 
-### Aditional files and Tasks
-- [ ] [TASK-03-01-credit-purchase-migrations.md](./TASK-03-01-credit-purchase-migrations.md)
-- [ ] [TASK-03-02-credit-purchase-models.md](./TASK-03-02-credit-purchase-models.md)
-- [ ] [TASK-03-credit-purchase.md](./TASK-03-credit-purchase.md)
+### Tasks to implements (verify if implemented and check it)
+- [ ] [TASK-03-01-credit-purchase-migrations.md](../todo/TASK-03-01-credit-purchase-migrations.md)
+- [ ] [TASK-03-02-credit-purchase-models.md](../todo/TASK-03-02-credit-purchase-models.md)
+- [ ] [TASK-03-03-credit-purchase-controller.md](../todo/TASK-03-03-credit-purchase-controller.md)
+- [ ] [TASK-03-04-payment-methods.md](../todo/TASK-03-04-payment-methods.md)
+- [ ] [TASK-03-05-pix-receipt-upload.md](../todo/TASK-03-05-pix-receipt-upload.md)
+- [ ] [TASK-03-06-payment-controller.md](../todo/TASK-03-06-payment-controller.md)
+- [ ] [TASK-03-07-admin-approval-controller.md](../todo/TASK-03-07-admin-approval-controller.md)
+- [ ] [TASK-03-08-credit-application.md](../todo/TASK-03-08-credit-application.md)
+- [ ] [TASK-03-09-frontend-modal.md](../todo/TASK-03-09-frontend-modal.md)
+- [ ] [TASK-03-10-frontend-step1-packages.md](../todo/TASK-03-10-frontend-step1-packages.md)
+- [ ] [TASK-03-11-frontend-step2-review.md](../todo/TASK-03-11-frontend-step2-review.md)
+- [ ] [TASK-03-12-frontend-step3-payment.md](../todo/TASK-03-12-frontend-step3-payment.md)
+- [ ] [TASK-03-13-frontend-payment-history.md](../todo/TASK-03-13-frontend-payment-history.md)
+- [ ] [TASK-03-14-admin-approval-view.md](../todo/TASK-03-14-admin-approval-view.md)
+- [ ] [TASK-03-15-add-to-wallet-view.md](../todo/TASK-03-15-add-to-wallet-view.md)
+- [ ] [TASK-03-16-discount-calculations.md](../todo/TASK-03-16-discount-calculations.md)
+- [ ] [TASK-03-17-complete-flow-testing.md](../todo/TASK-03-17-complete-flow-testing.md)
