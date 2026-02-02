@@ -1,7 +1,7 @@
 # TASK-02-01 — Add Customer Association to Users
 
 ## STATUS
-⬜ TODO
+✅ DONE
 
 ## RELATED PLAN
 [PLAN-TASK-02-customer-login.md](../plans/PLAN-TASK-02-customer-login.md) - Step 01
