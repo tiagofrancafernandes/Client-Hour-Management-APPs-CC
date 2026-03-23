@@ -1,9 +1,11 @@
 # TASK-03-04 — Implement Payment Methods and Validation
 
 ## STATUS
+
 ✅ DONE
 
 ## RELATED PLAN
+
 [PLAN-TASK-03-credit-purchase.md](../plans/PLAN-TASK-03-credit-purchase.md) - Step 06
 
 ## DESCRIPTION
@@ -41,6 +43,7 @@ enum PaymentStatus: string
 ### Update CreditPurchasePayment Model
 
 Add casts for enums:
+
 ```php
 protected $casts = [
     'payment_method' => PaymentMethod::class,
@@ -50,17 +53,20 @@ protected $casts = [
 ```
 
 ### Implementation Steps
+
 1. Create PaymentMethod enum
 2. Create PaymentStatus enum
 3. Update CreditPurchasePayment model with casts
 4. Test enum values in tinker
 
 ### Files to Create/Modify
+
 - `app/Enums/PaymentMethod.php` (new)
 - `app/Enums/PaymentStatus.php` (new)
 - `app/Models/CreditPurchasePayment.php` (update casts)
 
 ### Testing
+
 - Enum values validate correctly
 - Database stores enum values
 - Model casts work properly
@@ -68,5 +74,6 @@ protected $casts = [
 ---
 
 ## NOTES
+
 - PIX_OFFLINE requires receipt upload and admin approval
 - BANK_TRANSFER auto-completes

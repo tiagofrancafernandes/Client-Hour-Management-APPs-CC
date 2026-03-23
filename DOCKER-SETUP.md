@@ -26,11 +26,11 @@ Este guia explica como configurar e utilizar o ambiente Docker para desenvolvime
 
 Antes de começar, certifique-se de ter instalado:
 
-| Software | Versão Mínima | Como verificar |
-|----------|---------------|----------------|
-| Docker Engine | 24.0+ | `docker --version` |
-| Docker Compose | v2.20+ | `docker compose version` |
-| Git | 2.0+ | `git --version` |
+| Software       | Versão Mínima | Como verificar           |
+| -------------- | ------------- | ------------------------ |
+| Docker Engine  | 24.0+         | `docker --version`       |
+| Docker Compose | v2.20+        | `docker compose version` |
+| Git            | 2.0+          | `git --version`          |
 
 ### Instalação do Docker (Ubuntu/Debian)
 
@@ -55,13 +55,13 @@ docker compose version
 
 O Tiago Apps é composto por múltiplos repositórios. Cada aplicação tem seu próprio repositório:
 
-| Aplicação | Tecnologia | Repositório | Pasta Local |
-|-----------|------------|-------------|-------------|
-| **Infraestrutura** | Docker/Nginx | `TODO: URL do repositório principal` | `Client-Hour-Management-APPs/` |
-| **Backend (API)** | Laravel + PostgreSQL | `TODO: URL do repositório backend` | `Client-Hour-Management-APPs/backend/` |
-| **Frontend** | Vue 3 + Tailwind | `TODO: URL do repositório frontend` | `Client-Hour-Management-APPs/frontend/` |
-| **Landing Page** | Nuxt 4 + Tailwind | `TODO: URL do repositório landingpage` | `Client-Hour-Management-APPs/landingpage/` |
-| **Backoffice** | Nuxt 4 + Tailwind | `TODO: URL do repositório backoffice` | `Client-Hour-Management-APPs/frontend-backoffice/` |
+| Aplicação          | Tecnologia           | Repositório                            | Pasta Local                                        |
+| ------------------ | -------------------- | -------------------------------------- | -------------------------------------------------- |
+| **Infraestrutura** | Docker/Nginx         | `TODO: URL do repositório principal`   | `Client-Hour-Management-APPs/`                     |
+| **Backend (API)**  | Laravel + PostgreSQL | `TODO: URL do repositório backend`     | `Client-Hour-Management-APPs/backend/`             |
+| **Frontend**       | Vue 3 + Tailwind     | `TODO: URL do repositório frontend`    | `Client-Hour-Management-APPs/frontend/`            |
+| **Landing Page**   | Nuxt 4 + Tailwind    | `TODO: URL do repositório landingpage` | `Client-Hour-Management-APPs/landingpage/`         |
+| **Backoffice**     | Nuxt 4 + Tailwind    | `TODO: URL do repositório backoffice`  | `Client-Hour-Management-APPs/frontend-backoffice/` |
 
 > **Documentação específica:** Cada projeto possui seu próprio `README.md` com instruções detalhadas sobre a aplicação. Consulte-os para informações específicas de cada tecnologia.
 
@@ -300,22 +300,22 @@ docker compose --env-file .env.docker down -v
 
 ### URLs via Nginx (recomendado)
 
-| Aplicação | URL | Descrição |
-|-----------|-----|-----------|
-| Landing Page | http://local.tiagoapps.com.br | Site institucional |
-| Frontend | http://app.local.tiagoapps.com.br | Painel do cliente |
-| Backoffice | http://admin.local.tiagoapps.com.br | Painel administrativo |
-| API | http://api.local.tiagoapps.com.br | API REST Laravel |
+| Aplicação    | URL                                 | Descrição             |
+| ------------ | ----------------------------------- | --------------------- |
+| Landing Page | http://local.tiagoapps.com.br       | Site institucional    |
+| Frontend     | http://app.local.tiagoapps.com.br   | Painel do cliente     |
+| Backoffice   | http://admin.local.tiagoapps.com.br | Painel administrativo |
+| API          | http://api.local.tiagoapps.com.br   | API REST Laravel      |
 
 ### URLs de acesso direto (debug/desenvolvimento)
 
 Útil quando você quer acessar diretamente o servidor de desenvolvimento, sem passar pelo Nginx:
 
-| Aplicação | URL |
-|-----------|-----|
-| Frontend (Vite) | http://localhost:5173 |
+| Aplicação           | URL                   |
+| ------------------- | --------------------- |
+| Frontend (Vite)     | http://localhost:5173 |
 | Landing Page (Nuxt) | http://localhost:3000 |
-| Backoffice (Nuxt) | http://localhost:3001 |
+| Backoffice (Nuxt)   | http://localhost:3001 |
 
 ---
 
@@ -330,6 +330,7 @@ docker compose --env-file .env.docker exec <SERVIÇO> <COMANDO>
 ```
 
 Onde:
+
 - `<SERVIÇO>` é o nome do serviço definido no docker-compose (backend, frontend, etc.)
 - `<COMANDO>` é o comando que você quer executar
 
@@ -722,6 +723,7 @@ docker compose --env-file .env.docker up -d
 ### Problema: Portas em uso
 
 **Sintoma:**
+
 ```
 Error: Bind for 0.0.0.0:80 failed: port is already allocated
 ```
@@ -738,6 +740,7 @@ REDIS_PORT=6380
 ### Problema: Permissão negada em arquivos
 
 **Sintoma:**
+
 ```
 Permission denied: /var/www/html/storage/logs
 ```
@@ -745,18 +748,21 @@ Permission denied: /var/www/html/storage/logs
 **Solução:**
 
 1. Verifique seu USER_ID e GROUP_ID:
+
 ```bash
 id -u  # Seu USER_ID
 id -g  # Seu GROUP_ID
 ```
 
 2. Atualize `.env.docker` com os valores corretos:
+
 ```env
 USER_ID=1000
 GROUP_ID=1000
 ```
 
 3. Rebuild o container:
+
 ```bash
 docker compose --env-file .env.docker build --no-cache backend
 docker compose --env-file .env.docker up -d backend
@@ -765,6 +771,7 @@ docker compose --env-file .env.docker up -d backend
 ### Problema: Container reiniciando em loop
 
 **Sintoma:**
+
 ```
 Container tiagoapps-backend is restarting
 ```
@@ -772,11 +779,13 @@ Container tiagoapps-backend is restarting
 **Solução:**
 
 1. Verifique os logs:
+
 ```bash
 docker compose --env-file .env.docker logs backend
 ```
 
 2. Verifique se as dependências estão saudáveis:
+
 ```bash
 docker compose --env-file .env.docker ps
 ```
@@ -784,6 +793,7 @@ docker compose --env-file .env.docker ps
 ### Problema: Módulos Node.js não encontrados
 
 **Sintoma:**
+
 ```
 Error: Cannot find module 'xxx'
 ```
@@ -809,32 +819,33 @@ docker compose --env-file .env.docker up -d frontend
 
 ```javascript
 export default defineConfig({
-  server: {
-    host: '0.0.0.0',
-    watch: {
-      usePolling: true
-    }
-  }
-})
+    server: {
+        host: '0.0.0.0',
+        watch: {
+            usePolling: true,
+        },
+    },
+});
 ```
 
 **Solução para Nuxt (`nuxt.config.ts`):**
 
 ```typescript
 export default defineNuxtConfig({
-  vite: {
-    server: {
-      watch: {
-        usePolling: true
-      }
-    }
-  }
-})
+    vite: {
+        server: {
+            watch: {
+                usePolling: true,
+            },
+        },
+    },
+});
 ```
 
 ### Problema: Conexão recusada entre containers
 
 **Sintoma:**
+
 ```
 Connection refused to postgres:5432
 ```
@@ -842,11 +853,13 @@ Connection refused to postgres:5432
 **Solução:**
 
 1. Verifique se o container está rodando:
+
 ```bash
 docker compose --env-file .env.docker ps postgres
 ```
 
 2. Use o nome do serviço (não localhost):
+
 ```env
 # Correto (dentro do Docker)
 DB_HOST=postgres
@@ -879,27 +892,27 @@ docker compose --env-file .env.docker up -d
 
 ## Referência de Variáveis de Ambiente
 
-| Variável | Descrição | Padrão |
-|----------|-----------|--------|
-| `USER_ID` | ID do usuário host (evita problemas de permissão) | 1000 |
-| `GROUP_ID` | ID do grupo host | 1000 |
-| `APP_ENV` | Ambiente da aplicação | local |
-| `APP_DEBUG` | Modo debug | true |
-| `NGINX_HTTP_PORT` | Porta HTTP do Nginx | 80 |
-| `NGINX_HTTPS_PORT` | Porta HTTPS do Nginx | 443 |
-| `POSTGRES_USER` | Usuário PostgreSQL | tiagoapps |
-| `POSTGRES_PASSWORD` | Senha PostgreSQL | f2apps_secret |
-| `POSTGRES_DB` | Nome do banco | tiagoapps |
-| `POSTGRES_PORT` | Porta PostgreSQL | 5432 |
-| `REDIS_PASSWORD` | Senha Redis | f2apps_redis |
-| `REDIS_PORT` | Porta Redis | 6379 |
-| `FRONTEND_PORT` | Porta do frontend Vue (acesso direto) | 5173 |
-| `LANDINGPAGE_PORT` | Porta da landing page (acesso direto) | 3000 |
-| `BACKOFFICE_PORT` | Porta do backoffice (acesso direto) | 3001 |
-| `SAAS_DOMAIN` | Domínio da landing page | local.tiagoapps.com.br |
-| `CUSTOMER_APP_DOMAIN` | Domínio do frontend | app.local.tiagoapps.com.br |
-| `BACKOFFICE_DOMAIN` | Domínio do backoffice | admin.local.tiagoapps.com.br |
-| `API_DOMAIN` | Domínio da API | api.local.tiagoapps.com.br |
+| Variável              | Descrição                                         | Padrão                       |
+| --------------------- | ------------------------------------------------- | ---------------------------- |
+| `USER_ID`             | ID do usuário host (evita problemas de permissão) | 1000                         |
+| `GROUP_ID`            | ID do grupo host                                  | 1000                         |
+| `APP_ENV`             | Ambiente da aplicação                             | local                        |
+| `APP_DEBUG`           | Modo debug                                        | true                         |
+| `NGINX_HTTP_PORT`     | Porta HTTP do Nginx                               | 80                           |
+| `NGINX_HTTPS_PORT`    | Porta HTTPS do Nginx                              | 443                          |
+| `POSTGRES_USER`       | Usuário PostgreSQL                                | tiagoapps                    |
+| `POSTGRES_PASSWORD`   | Senha PostgreSQL                                  | f2apps_secret                |
+| `POSTGRES_DB`         | Nome do banco                                     | tiagoapps                    |
+| `POSTGRES_PORT`       | Porta PostgreSQL                                  | 5432                         |
+| `REDIS_PASSWORD`      | Senha Redis                                       | f2apps_redis                 |
+| `REDIS_PORT`          | Porta Redis                                       | 6379                         |
+| `FRONTEND_PORT`       | Porta do frontend Vue (acesso direto)             | 5173                         |
+| `LANDINGPAGE_PORT`    | Porta da landing page (acesso direto)             | 3000                         |
+| `BACKOFFICE_PORT`     | Porta do backoffice (acesso direto)               | 3001                         |
+| `SAAS_DOMAIN`         | Domínio da landing page                           | local.tiagoapps.com.br       |
+| `CUSTOMER_APP_DOMAIN` | Domínio do frontend                               | app.local.tiagoapps.com.br   |
+| `BACKOFFICE_DOMAIN`   | Domínio do backoffice                             | admin.local.tiagoapps.com.br |
+| `API_DOMAIN`          | Domínio da API                                    | api.local.tiagoapps.com.br   |
 
 ---
 

@@ -9,16 +9,19 @@ Implementar timer para registro de horas em tempo real com ciclos de início/pau
 ## Conceitos
 
 ### Timer
+
 - Registro temporário de tempo trabalhado
 - Pode ter múltiplos **ciclos** (play/pause cria novo ciclo)
 - Só é convertido em débito de horas após **confirmação**
 
 ### Ciclo
+
 - Par de timestamps: `started_at` e `ended_at`
 - Criado ao iniciar/retomar timer
 - Finalizado ao pausar/parar timer
 
 ### Estados do Timer
+
 - `running` - Timer em execução (contando)
 - `paused` - Timer pausado (não contando)
 - `stopped` - Timer parado, aguardando confirmação
@@ -32,6 +35,7 @@ Implementar timer para registro de horas em tempo real com ciclos de início/pau
 ### 1. Migrations
 
 **timers**
+
 ```php
 Schema::create('timers', function (Blueprint $table) {
     $table->id();
@@ -47,6 +51,7 @@ Schema::create('timers', function (Blueprint $table) {
 ```
 
 **timer_cycles**
+
 ```php
 Schema::create('timer_cycles', function (Blueprint $table) {
     $table->id();
@@ -60,6 +65,7 @@ Schema::create('timer_cycles', function (Blueprint $table) {
 ### 2. Models
 
 **Timer**
+
 ```php
 class Timer extends Model
 {
@@ -87,6 +93,7 @@ class Timer extends Model
 ```
 
 **TimerCycle**
+
 ```php
 class TimerCycle extends Model
 {
@@ -105,20 +112,20 @@ class TimerCycle extends Model
 
 ### 3. Endpoints API
 
-| Method | Endpoint | Description | Permission |
-|--------|----------|-------------|------------|
-| GET | `/api/timers` | Listar timers do usuário | `timer.view_any` |
-| GET | `/api/timers/active` | Obter timer ativo (se houver) | `timer.view` |
-| GET | `/api/timers/{id}` | Detalhes do timer | `timer.view` |
-| POST | `/api/timers` | Iniciar novo timer | `timer.create` |
-| POST | `/api/timers/{id}/pause` | Pausar timer | `timer.update` |
-| POST | `/api/timers/{id}/resume` | Retomar timer | `timer.update` |
-| POST | `/api/timers/{id}/stop` | Parar timer | `timer.update` |
-| POST | `/api/timers/{id}/cancel` | Cancelar timer | `timer.update` |
-| POST | `/api/timers/{id}/confirm` | Confirmar e criar ledger entry | `timer.confirm` |
-| PUT | `/api/timers/{id}` | Atualizar timer (só stopped) | `timer.update` |
-| PUT | `/api/timers/{id}/cycles` | Atualizar ciclos (só stopped) | `timer.update` |
-| DELETE | `/api/timers/{id}` | Excluir timer (só confirmed/cancelled) | `timer.delete` |
+| Method | Endpoint                   | Description                            | Permission       |
+| ------ | -------------------------- | -------------------------------------- | ---------------- |
+| GET    | `/api/timers`              | Listar timers do usuário               | `timer.view_any` |
+| GET    | `/api/timers/active`       | Obter timer ativo (se houver)          | `timer.view`     |
+| GET    | `/api/timers/{id}`         | Detalhes do timer                      | `timer.view`     |
+| POST   | `/api/timers`              | Iniciar novo timer                     | `timer.create`   |
+| POST   | `/api/timers/{id}/pause`   | Pausar timer                           | `timer.update`   |
+| POST   | `/api/timers/{id}/resume`  | Retomar timer                          | `timer.update`   |
+| POST   | `/api/timers/{id}/stop`    | Parar timer                            | `timer.update`   |
+| POST   | `/api/timers/{id}/cancel`  | Cancelar timer                         | `timer.update`   |
+| POST   | `/api/timers/{id}/confirm` | Confirmar e criar ledger entry         | `timer.confirm`  |
+| PUT    | `/api/timers/{id}`         | Atualizar timer (só stopped)           | `timer.update`   |
+| PUT    | `/api/timers/{id}/cycles`  | Atualizar ciclos (só stopped)          | `timer.update`   |
+| DELETE | `/api/timers/{id}`         | Excluir timer (só confirmed/cancelled) | `timer.delete`   |
 
 ### 4. TimerService
 
@@ -215,20 +222,14 @@ Balão flutuante exibido quando há timer ativo:
             @mouseleave="expanded = false"
         >
             <!-- Balão compacto -->
-            <div
-                v-if="!expanded"
-                class="bg-blue-600 text-white px-4 py-2 rounded-full shadow-lg cursor-pointer"
-            >
+            <div v-if="!expanded" class="bg-blue-600 text-white px-4 py-2 rounded-full shadow-lg cursor-pointer">
                 {{ formattedTime }}
                 <span v-if="timerStore.isPaused" class="ml-2">⏸️</span>
                 <span v-else class="ml-2 animate-pulse">●</span>
             </div>
 
             <!-- Balão expandido com ações -->
-            <div
-                v-else
-                class="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-4 min-w-64"
-            >
+            <div v-else class="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-4 min-w-64">
                 <div class="text-2xl font-mono text-center mb-4">
                     {{ formattedTime }}
                 </div>
@@ -267,9 +268,9 @@ Modal exibido ao parar timer:
 
 - Resumo do tempo total
 - Lista de ciclos (editáveis)
-  - Ajustar horário de início/fim
-  - Excluir ciclo
-  - Adicionar novo ciclo
+    - Ajustar horário de início/fim
+    - Excluir ciclo
+    - Adicionar novo ciclo
 - Total recalculado em tempo real
 - Botões: "Confirmar" / "Voltar" / "Cancelar Timer"
 
@@ -280,9 +281,9 @@ Listagem de timers do usuário:
 - Filtros por status
 - Tabela com: Data, Carteira, Duração, Status, Ações
 - Ações por status:
-  - `stopped`: Confirmar, Editar, Cancelar
-  - `confirmed`: Visualizar
-  - `cancelled`: Excluir
+    - `stopped`: Confirmar, Editar, Cancelar
+    - `confirmed`: Visualizar
+    - `cancelled`: Excluir
 
 ### 6. Atualização do Header/Layout
 
@@ -339,6 +340,7 @@ onUnmounted(() => {
 ## Output Esperado
 
 ### Backend
+
 - Migrations: `timers`, `timer_cycles`
 - Models: `Timer`, `TimerCycle`
 - `TimerController`
@@ -348,12 +350,13 @@ onUnmounted(() => {
 - Testes Feature
 
 ### Frontend
+
 - Store: `useTimerStore`
 - Componentes:
-  - `TimerFloatingBalloon.vue`
-  - `TimerStartModal.vue`
-  - `TimerConfirmModal.vue`
-  - `TimerCycleEditor.vue`
+    - `TimerFloatingBalloon.vue`
+    - `TimerStartModal.vue`
+    - `TimerConfirmModal.vue`
+    - `TimerCycleEditor.vue`
 - View: `TimersListView.vue`
 - Rota: `/timers`
 
@@ -368,6 +371,7 @@ onUnmounted(() => {
 **Arquivo**: [TASK-03-HOTFIX-timer-reactivity.md](TASK-03-HOTFIX-timer-reactivity.md)
 
 **Resumo**:
+
 - Corrigido código não-reativo em `TimerFloatingBalloon.vue` (linhas 98-106)
 - Corrigido código não-reativo em `TimerConfirmModal.vue` (linhas 107-109)
 - Adicionados `watch` para observar mudanças em `hasTimer`, `timer` e `props`

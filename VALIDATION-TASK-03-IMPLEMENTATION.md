@@ -11,6 +11,7 @@
 Das 17 tarefas planejadas no PLAN-TASK-03, apenas **as tarefas 01-02 foram implementadas** (migrations e models). As tarefas 03-17 foram **documentadas mas NÃO implementadas** no código.
 
 ### Divisão:
+
 - ✅ **IMPLEMENTADO**: 20% (Migrations + Models)
 - ❌ **FALTANDO**: 80% (Controllers, Rotas, Frontend, Permissions, Services)
 
@@ -20,15 +21,16 @@ Das 17 tarefas planejadas no PLAN-TASK-03, apenas **as tarefas 01-02 foram imple
 
 ### Migrations (3/3 implementadas)
 
-| Arquivo | Status | Localização | Detalhes |
-|---------|--------|-------------|----------|
-| add_credit_purchase_allowed_to_wallets_table.php | ✅ | `/backend/database/migrations/2026_02_02_035902_*` | Coluna boolean no wallets |
-| create_credit_purchases_table.php | ✅ | `/backend/database/migrations/2026_02_02_035920_*` | Tabela com FK para wallets e users |
-| create_credit_purchase_payments_table.php | ✅ | `/backend/database/migrations/2026_02_02_035937_*` | Tabela com FK para credit_purchases |
+| Arquivo                                          | Status | Localização                                        | Detalhes                            |
+| ------------------------------------------------ | ------ | -------------------------------------------------- | ----------------------------------- |
+| add_credit_purchase_allowed_to_wallets_table.php | ✅     | `/backend/database/migrations/2026_02_02_035902_*` | Coluna boolean no wallets           |
+| create_credit_purchases_table.php                | ✅     | `/backend/database/migrations/2026_02_02_035920_*` | Tabela com FK para wallets e users  |
+| create_credit_purchase_payments_table.php        | ✅     | `/backend/database/migrations/2026_02_02_035937_*` | Tabela com FK para credit_purchases |
 
 ### Models (2/2 implementados)
 
 #### CreditPurchase.php ✅
+
 ```
 Localização: /backend/app/Models/CreditPurchase.php
 Relationships:
@@ -42,6 +44,7 @@ Fillable: wallet_id, customer_id, total_hours, total_price, currency_code, statu
 ```
 
 #### CreditPurchasePayment.php ✅
+
 ```
 Localização: /backend/app/Models/CreditPurchasePayment.php
 Relationships:
@@ -55,6 +58,7 @@ Fillable: credit_purchase_id, payment_method, payment_status, pix_receipt_path, 
 ### Model Relationships (Atualizações em modelos existentes)
 
 #### User.php ✅
+
 ```
 Relacionamentos adicionados:
   - creditPurchases() → HasMany CreditPurchase (customer_id) ✅ [linha 60-63]
@@ -62,6 +66,7 @@ Relacionamentos adicionados:
 ```
 
 #### Wallet.php ✅
+
 ```
 Relacionamentos adicionados:
   - creditPurchases() → HasMany CreditPurchase ✅ [linha 39-42]
@@ -76,11 +81,11 @@ Fillable atualizado:
 
 ### Controllers (0/3 implementados)
 
-| Controller | Status | Esperado | Endpoints |
-|------------|--------|----------|-----------|
-| CreditPurchaseController | ❌ | `/backend/app/Http/Controllers/Api/CreditPurchaseController.php` | POST `/api/credit-purchases`, GET `/api/credit-purchases`, GET `/api/credit-purchases/{id}` |
-| PaymentController | ❌ | `/backend/app/Http/Controllers/Api/PaymentController.php` | POST `/api/credit-purchases/{id}/payments` |
-| PaymentApprovalController | ❌ | `/backend/app/Http/Controllers/Api/PaymentApprovalController.php` | POST `/api/payments/{id}/approve`, POST `/api/payments/{id}/reject`, GET `/api/payments/pending-approvals` |
+| Controller                | Status | Esperado                                                          | Endpoints                                                                                                  |
+| ------------------------- | ------ | ----------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| CreditPurchaseController  | ❌     | `/backend/app/Http/Controllers/Api/CreditPurchaseController.php`  | POST `/api/credit-purchases`, GET `/api/credit-purchases`, GET `/api/credit-purchases/{id}`                |
+| PaymentController         | ❌     | `/backend/app/Http/Controllers/Api/PaymentController.php`         | POST `/api/credit-purchases/{id}/payments`                                                                 |
+| PaymentApprovalController | ❌     | `/backend/app/Http/Controllers/Api/PaymentApprovalController.php` | POST `/api/payments/{id}/approve`, POST `/api/payments/{id}/reject`, GET `/api/payments/pending-approvals` |
 
 ### Rotas Registradas (0/9 implementadas)
 
@@ -112,27 +117,27 @@ Rotas faltando:
 
 ### Services (0/3 implementados)
 
-| Serviço | Status | Descrição |
-|---------|--------|-----------|
-| CreditPurchaseService | ❌ | Criar compra, validar pacotes, calcular totais |
-| DiscountCalculatorService | ❌ | Calcular descontos baseado em horas (10%/15%/20%/25%) |
-| PaymentApprovalService | ❌ | Aprovar/rejeitar pagamentos, criar ledger entries |
+| Serviço                   | Status | Descrição                                             |
+| ------------------------- | ------ | ----------------------------------------------------- |
+| CreditPurchaseService     | ❌     | Criar compra, validar pacotes, calcular totais        |
+| DiscountCalculatorService | ❌     | Calcular descontos baseado em horas (10%/15%/20%/25%) |
+| PaymentApprovalService    | ❌     | Aprovar/rejeitar pagamentos, criar ledger entries     |
 
 ### Form Requests (0/3 implementados)
 
-| Request | Status | Descrição |
-|---------|--------|-----------|
-| StoreCreditPurchaseRequest | ❌ | Validação: wallet_id, hours, payment_method (se pix_offline, receipt_file) |
-| StorePaymentRequest | ❌ | Validação: credit_purchase_id, payment_method, pix_receipt_path |
-| ApprovePaymentRequest | ❌ | Validação: payment_id, notes (opcional) |
+| Request                    | Status | Descrição                                                                  |
+| -------------------------- | ------ | -------------------------------------------------------------------------- |
+| StoreCreditPurchaseRequest | ❌     | Validação: wallet_id, hours, payment_method (se pix_offline, receipt_file) |
+| StorePaymentRequest        | ❌     | Validação: credit_purchase_id, payment_method, pix_receipt_path            |
+| ApprovePaymentRequest      | ❌     | Validação: payment_id, notes (opcional)                                    |
 
 ### Enums (0/3 implementados)
 
-| Enum | Status | Valores | Localização |
-|------|--------|--------|-------------|
-| PaymentMethod | ❌ | pix_offline, bank_transfer | `/backend/app/Enums/PaymentMethod.php` |
-| CreditPurchaseStatus | ❌ | pending, approved, rejected, cancelled | `/backend/app/Enums/CreditPurchaseStatus.php` |
-| PaymentStatus | ❌ | pending, approved, rejected, completed | `/backend/app/Enums/PaymentStatus.php` |
+| Enum                 | Status | Valores                                | Localização                                   |
+| -------------------- | ------ | -------------------------------------- | --------------------------------------------- |
+| PaymentMethod        | ❌     | pix_offline, bank_transfer             | `/backend/app/Enums/PaymentMethod.php`        |
+| CreditPurchaseStatus | ❌     | pending, approved, rejected, cancelled | `/backend/app/Enums/CreditPurchaseStatus.php` |
+| PaymentStatus        | ❌     | pending, approved, rejected, completed | `/backend/app/Enums/PaymentStatus.php`        |
 
 ---
 
@@ -324,37 +329,41 @@ Types faltando:
 
 ## 5. RESUMO DETALHADO POR CAMADA
 
-| Camada | Componente | Total | Implementado | Faltando | % Pronto |
-|--------|-----------|-------|--------------|----------|----------|
-| **Database** | Migrations | 3 | 3 | 0 | 100% |
-| **Database** | Models | 2 | 2 | 0 | 100% |
-| **Database** | Model Relations (User/Wallet) | 3 | 3 | 0 | 100% |
-| **API** | Controllers | 3 | 0 | 3 | 0% |
-| **API** | Routes | 9 | 0 | 9 | 0% |
-| **API** | Services | 3 | 0 | 3 | 0% |
-| **API** | Form Requests | 3 | 0 | 3 | 0% |
-| **API** | Enums | 3 | 0 | 3 | 0% |
-| **Auth** | Permissions | 5 | 0 | 5 | 0% |
-| **Auth** | Policies | 1 | 0 | 1 | 0% |
-| **Frontend** | Composables | 1 | 0 | 1 | 0% |
-| **Frontend** | Components | 5 | 0 | 5 | 0% |
-| **Frontend** | Views | 2 | 0 | 2 | 0% |
-| **Frontend** | Routes | 3 | 0 | 3 | 0% |
-| **Frontend** | Types | 5 | 0 | 5 | 0% |
-| **TOTAL** | | **52** | **10** | **42** | **19%** |
+| Camada       | Componente                    | Total  | Implementado | Faltando | % Pronto |
+| ------------ | ----------------------------- | ------ | ------------ | -------- | -------- |
+| **Database** | Migrations                    | 3      | 3            | 0        | 100%     |
+| **Database** | Models                        | 2      | 2            | 0        | 100%     |
+| **Database** | Model Relations (User/Wallet) | 3      | 3            | 0        | 100%     |
+| **API**      | Controllers                   | 3      | 0            | 3        | 0%       |
+| **API**      | Routes                        | 9      | 0            | 9        | 0%       |
+| **API**      | Services                      | 3      | 0            | 3        | 0%       |
+| **API**      | Form Requests                 | 3      | 0            | 3        | 0%       |
+| **API**      | Enums                         | 3      | 0            | 3        | 0%       |
+| **Auth**     | Permissions                   | 5      | 0            | 5        | 0%       |
+| **Auth**     | Policies                      | 1      | 0            | 1        | 0%       |
+| **Frontend** | Composables                   | 1      | 0            | 1        | 0%       |
+| **Frontend** | Components                    | 5      | 0            | 5        | 0%       |
+| **Frontend** | Views                         | 2      | 0            | 2        | 0%       |
+| **Frontend** | Routes                        | 3      | 0            | 3        | 0%       |
+| **Frontend** | Types                         | 5      | 0            | 5        | 0%       |
+| **TOTAL**    |                               | **52** | **10**       | **42**   | **19%**  |
 
 ---
 
 ## CONCLUSÃO
 
 ### O que foi feito (19%):
+
 ✅ Foundation layer completa:
+
 - 3 migrations criadas
 - 2 models com relacionamentos corretos
 - Relacionamentos adicionados em User e Wallet
 
 ### O que falta (81%):
+
 ❌ API layer completa:
+
 - 3 controllers
 - 9 rotas
 - 3 serviços
@@ -363,10 +372,12 @@ Types faltando:
 - 1 policy
 
 ❌ Authentication layer:
+
 - 5 permissões no seeder
 - 1 policy class
 
 ❌ Frontend layer completa:
+
 - 1 composable
 - 5 componentes Vue
 - 2 views
@@ -374,6 +385,7 @@ Types faltando:
 - 5 types TypeScript
 
 ### Próximas etapas (em ordem):
+
 1. ✅ Database layer (COMPLETO)
 2. Criar Enums (PaymentMethod, CreditPurchaseStatus, PaymentStatus)
 3. Criar Form Requests (validação)

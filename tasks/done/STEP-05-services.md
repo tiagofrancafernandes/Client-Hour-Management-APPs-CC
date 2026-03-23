@@ -9,10 +9,12 @@ Centralize business logic.
 ## SERVICES
 
 ### BalanceCalculatorService
+
 - Calculates wallet balance
 - Uses SUM of ledger entries
 
 ### ReportService
+
 - Aggregates entries
 - Applies filters
 

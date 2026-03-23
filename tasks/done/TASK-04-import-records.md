@@ -9,12 +9,14 @@ Permitir importação de registros de horas via planilhas CSV e XLSX com valida�
 ## Conceitos
 
 ### Plano de Importação
+
 - Registro temporário do upload de planilha
 - Contém dados validados/parseados aguardando confirmação
 - Pode ser ajustado antes de confirmar
 - Só persiste no ledger após confirmação
 
 ### Estados do Import Plan
+
 - `pending` - Aguardando validação
 - `validated` - Validado, aguardando confirmação
 - `confirmed` - Confirmado, registros criados
@@ -33,6 +35,7 @@ Permitir importação de registros de horas via planilhas CSV e XLSX com valida�
 ### 1. Migrations
 
 **import_plans**
+
 ```php
 Schema::create('import_plans', function (Blueprint $table) {
     $table->id();
@@ -49,6 +52,7 @@ Schema::create('import_plans', function (Blueprint $table) {
 ```
 
 **import_plan_rows**
+
 ```php
 Schema::create('import_plan_rows', function (Blueprint $table) {
     $table->id();
@@ -69,6 +73,7 @@ Schema::create('import_plan_rows', function (Blueprint $table) {
 ### 2. Models
 
 **ImportPlan**
+
 ```php
 class ImportPlan extends Model
 {
@@ -91,6 +96,7 @@ class ImportPlan extends Model
 ```
 
 **ImportPlanRow**
+
 ```php
 class ImportPlanRow extends Model
 {
@@ -115,21 +121,21 @@ class ImportPlanRow extends Model
 
 ### 3. Endpoints API
 
-| Method | Endpoint | Description | Permission |
-|--------|----------|-------------|------------|
-| GET | `/api/import-plans` | Listar planos de importação | `import.view_any` |
-| GET | `/api/import-plans/{id}` | Detalhes do plano | `import.view` |
-| POST | `/api/import-plans` | Upload e criar plano | `import.create` |
-| PUT | `/api/import-plans/{id}` | Atualizar plano | `import.update` |
-| POST | `/api/import-plans/{id}/validate` | Revalidar plano | `import.update` |
-| POST | `/api/import-plans/{id}/confirm` | Confirmar importação | `import.confirm` |
-| POST | `/api/import-plans/{id}/cancel` | Cancelar plano | `import.update` |
-| DELETE | `/api/import-plans/{id}` | Excluir plano | `import.delete` |
-| GET | `/api/import-plans/{id}/rows` | Listar linhas | `import.view` |
-| PUT | `/api/import-plans/{id}/rows/{rowId}` | Editar linha | `import.update` |
-| DELETE | `/api/import-plans/{id}/rows/{rowId}` | Excluir linha | `import.update` |
-| POST | `/api/import-plans/{id}/rows` | Adicionar linha | `import.update` |
-| GET | `/api/import-templates/{format}` | Download template | - (público) |
+| Method | Endpoint                              | Description                 | Permission        |
+| ------ | ------------------------------------- | --------------------------- | ----------------- |
+| GET    | `/api/import-plans`                   | Listar planos de importação | `import.view_any` |
+| GET    | `/api/import-plans/{id}`              | Detalhes do plano           | `import.view`     |
+| POST   | `/api/import-plans`                   | Upload e criar plano        | `import.create`   |
+| PUT    | `/api/import-plans/{id}`              | Atualizar plano             | `import.update`   |
+| POST   | `/api/import-plans/{id}/validate`     | Revalidar plano             | `import.update`   |
+| POST   | `/api/import-plans/{id}/confirm`      | Confirmar importação        | `import.confirm`  |
+| POST   | `/api/import-plans/{id}/cancel`       | Cancelar plano              | `import.update`   |
+| DELETE | `/api/import-plans/{id}`              | Excluir plano               | `import.delete`   |
+| GET    | `/api/import-plans/{id}/rows`         | Listar linhas               | `import.view`     |
+| PUT    | `/api/import-plans/{id}/rows/{rowId}` | Editar linha                | `import.update`   |
+| DELETE | `/api/import-plans/{id}/rows/{rowId}` | Excluir linha               | `import.update`   |
+| POST   | `/api/import-plans/{id}/rows`         | Adicionar linha             | `import.update`   |
+| GET    | `/api/import-templates/{format}`      | Download template           | - (público)       |
 
 ### 4. ImportService
 
@@ -151,6 +157,7 @@ class ImportService
 ### 5. Validação de Linhas
 
 Para cada linha da planilha:
+
 - `reference_date`: required, date, não futura
 - `hours`: required, numeric, != 0
 - `title`: required, string, max:255
@@ -166,6 +173,7 @@ Para cada linha da planilha:
 | 2026-01-16 | -1.0 | Reunião com cliente | | reuniao |
 
 **Notas no template:**
+
 - Horas negativas = débito, positivas = crédito
 - Tags separadas por vírgula
 - Data no formato YYYY-MM-DD ou DD/MM/YYYY
@@ -233,6 +241,7 @@ function useImport() {
 ### 2. Tela: ImportUploadView
 
 Etapa 1 - Upload:
+
 - Seleção de cliente e carteira
 - Upload de arquivo (drag & drop ou click)
 - Aceitar .csv e .xlsx
@@ -244,11 +253,13 @@ Etapa 1 - Upload:
 Etapa 2 - Revisão do plano:
 
 **Header:**
+
 - Nome do arquivo original
 - Carteira selecionada
 - Status do plano
 
 **Resumo:**
+
 - Total de linhas
 - Linhas válidas / inválidas
 - Total de horas (créditos/débitos)
@@ -260,6 +271,7 @@ Etapa 2 - Revisão do plano:
 | 2 | 16/01/2026 | -1.0h | Reunião | | ❌ Erro | Editar / Excluir |
 
 **Ações:**
+
 - Editar linha (modal)
 - Excluir linha
 - Adicionar nova linha
@@ -269,6 +281,7 @@ Etapa 2 - Revisão do plano:
 ### 4. Componente: ImportRowEditModal
 
 Modal para editar linha:
+
 - Data (date picker)
 - Horas (number input)
 - Título (text input)
@@ -280,12 +293,13 @@ Modal para editar linha:
 ### 5. Tela: ImportPlansListView
 
 Listagem de planos de importação:
+
 - Filtro por status
 - Tabela: Data, Arquivo, Carteira, Status, Linhas, Ações
 - Ações por status:
-  - `validated`: Revisar, Confirmar, Cancelar
-  - `confirmed`: Visualizar
-  - `cancelled`: Excluir
+    - `validated`: Revisar, Confirmar, Cancelar
+    - `confirmed`: Visualizar
+    - `cancelled`: Excluir
 
 ---
 
@@ -325,6 +339,7 @@ Listagem de planos de importação:
 ## Output Esperado
 
 ### Backend
+
 - Migrations: `import_plans`, `import_plan_rows`
 - Models: `ImportPlan`, `ImportPlanRow`
 - `ImportPlanController`
@@ -335,12 +350,13 @@ Listagem de planos de importação:
 - Testes Feature
 
 ### Frontend
+
 - Composable: `useImport.ts`
 - Views:
-  - `ImportUploadView.vue`
-  - `ImportReviewView.vue`
-  - `ImportPlansListView.vue`
+    - `ImportUploadView.vue`
+    - `ImportReviewView.vue`
+    - `ImportPlansListView.vue`
 - Componentes:
-  - `ImportRowEditModal.vue`
-  - `ImportSummaryCard.vue`
+    - `ImportRowEditModal.vue`
+    - `ImportSummaryCard.vue`
 - Rotas: `/import`, `/import/:id`, `/import/plans`

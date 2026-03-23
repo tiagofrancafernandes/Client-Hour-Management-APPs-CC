@@ -28,12 +28,12 @@ docker compose --env-file .env.docker up -d
 
 ## URLs Locais
 
-| Aplicação | URL |
-|-----------|-----|
-| Landing Page | http://local.tiagoapps.com.br |
-| Frontend | http://app.local.tiagoapps.com.br |
-| Backoffice | http://admin.local.tiagoapps.com.br |
-| API | http://api.local.tiagoapps.com.br |
+| Aplicação    | URL                                 |
+| ------------ | ----------------------------------- |
+| Landing Page | http://local.tiagoapps.com.br       |
+| Frontend     | http://app.local.tiagoapps.com.br   |
+| Backoffice   | http://admin.local.tiagoapps.com.br |
+| API          | http://api.local.tiagoapps.com.br   |
 
 ---
 

@@ -1,6 +1,7 @@
 # TASK 03 - HOTFIX — Correção de Reatividade do Timer
 
 ## Data
+
 31/01/2026
 
 ## Contexto
@@ -16,10 +17,12 @@ Após implementação da TASK-03 (Feature de Timer), foram identificados problem
 **Arquivo**: `frontend/src/components/TimerFloatingBalloon.vue`
 
 **Sintoma**:
+
 - Balão flutuante não aparecia quando um timer era iniciado
 - Mesmo com timer ativo (status running/paused), o balão não era exibido
 
 **Causa Raiz** (linhas 98-106):
+
 ```typescript
 // ❌ Código incorreto - fora de qualquer função reativa
 // Este código só executava UMA VEZ quando o componente era criado
@@ -35,6 +38,7 @@ if (!hasTimer.value && intervalId.value) {
 **Problema**: O código estava fora de qualquer ciclo de vida reativo (watch, onMounted, computed, etc), então só executava uma vez quando o componente era montado, não quando `hasTimer` mudava de valor.
 
 **Solução Aplicada**:
+
 ```typescript
 // ✅ Código correto - watch para observar mudanças
 watch(hasTimer, (newValue, oldValue) => {
@@ -48,13 +52,17 @@ watch(hasTimer, (newValue, oldValue) => {
 });
 
 // Watch para atualizar tempo local quando timer mudar
-watch(timer, (newTimer) => {
-    if (newTimer) {
-        localTime.value = newTimer.total_seconds;
-    } else {
-        localTime.value = 0;
-    }
-}, { deep: true });
+watch(
+    timer,
+    (newTimer) => {
+        if (newTimer) {
+            localTime.value = newTimer.total_seconds;
+        } else {
+            localTime.value = 0;
+        }
+    },
+    { deep: true }
+);
 ```
 
 ### 2. TimerConfirmModal não inicializava os ciclos
@@ -62,10 +70,12 @@ watch(timer, (newTimer) => {
 **Arquivo**: `frontend/src/components/TimerConfirmModal.vue`
 
 **Sintoma**:
+
 - Modal de confirmação não mostrava os ciclos do timer
 - Não era possível confirmar o timer e criar o ledger entry
 
 **Causa Raiz** (linhas 107-109):
+
 ```typescript
 // ❌ Código incorreto - fora de qualquer função reativa
 // Este código só executava UMA VEZ quando o componente era criado
@@ -77,6 +87,7 @@ if (props.show && props.timer) {
 **Problema**: Similar ao anterior, o código estava fora de qualquer watcher, então não reagia a mudanças nas props.
 
 **Solução Aplicada**:
+
 ```typescript
 // ✅ Código correto - watch para observar mudanças
 watch(
@@ -95,6 +106,7 @@ watch(
 ## Fluxo Corrigido
 
 ### Antes (Não Funcionava):
+
 ```
 1. Usuário clica "Start Timer" → Timer criado no backend ✅
 2. Timer store atualiza activeTimer ✅
@@ -104,6 +116,7 @@ watch(
 ```
 
 ### Depois (Funcionando):
+
 ```
 1. Usuário clica "Start Timer" → Timer criado no backend ✅
 2. Timer store atualiza activeTimer ✅
@@ -119,18 +132,21 @@ watch(
 ## Lições Aprendidas
 
 ### 1. Código no Nível Raiz de `<script setup>` não é Reativo
+
 - Código fora de funções como `watch`, `computed`, `onMounted` só executa **uma vez**
 - Para reagir a mudanças, use:
-  - `watch` para observar refs/computed
-  - `computed` para valores derivados
-  - Lifecycle hooks (`onMounted`, `onUpdated`, etc) para efeitos colaterais
+    - `watch` para observar refs/computed
+    - `computed` para valores derivados
+    - Lifecycle hooks (`onMounted`, `onUpdated`, etc) para efeitos colaterais
 
 ### 2. Props Mudando Requerem Watch
+
 - Props podem mudar a qualquer momento
 - Se você precisa executar código quando uma prop muda, use `watch`
 - Use `{ immediate: true }` para executar o watch na primeira renderização
 
 ### 3. Padrão Correto para Inicialização Condicional
+
 ```typescript
 // ❌ ERRADO - Não é reativo
 if (someCondition.value) {
@@ -138,11 +154,15 @@ if (someCondition.value) {
 }
 
 // ✅ CORRETO - Reativo
-watch(someCondition, (newValue) => {
-    if (newValue) {
-        doSomething();
-    }
-}, { immediate: true });
+watch(
+    someCondition,
+    (newValue) => {
+        if (newValue) {
+            doSomething();
+        }
+    },
+    { immediate: true }
+);
 ```
 
 ---
@@ -192,6 +212,7 @@ Date:   Fri Jan 31 2026
 ✅ **RESOLVIDO**
 
 Todos os problemas de reatividade foram corrigidos. O fluxo completo de timer agora funciona:
+
 - ✅ Iniciar timer
 - ✅ Balão flutuante aparece
 - ✅ Pausar/Retomar timer

@@ -10,21 +10,25 @@ NO CODE YET.
 ## CONCEPTS (FINAL)
 
 ### Client
+
 Represents a customer.
 A client can have multiple wallets.
 
 ### Wallet
+
 Represents a project or cost center.
 Belongs to a client.
 Holds ledger entries.
 Balance is derived.
 
 ### LedgerEntry
+
 Immutable record.
 Represents a change in hours.
 Can be positive or negative.
 
 ### Tag
+
 Optional classification for ledger entries.
 
 ---

@@ -24,11 +24,12 @@ composer require barryvdh/laravel-dompdf
 
 ### 2. Endpoints API
 
-| Method | Endpoint | Description | Permission |
-|--------|----------|-------------|------------|
-| GET | `/api/reports/export` | Exportar relatório | `report.view` |
+| Method | Endpoint              | Description        | Permission    |
+| ------ | --------------------- | ------------------ | ------------- |
+| GET    | `/api/reports/export` | Exportar relatório | `report.view` |
 
 **Query Parameters:**
+
 - `format`: `pdf` ou `excel` (required)
 - `client_id`: filtro por cliente (optional)
 - `wallet_id`: filtro por carteira (optional)
@@ -97,6 +98,7 @@ public function exportToPdf(array $filters): Response
 ### 6. View para PDF
 
 Criar view `resources/views/reports/export.blade.php`:
+
 - Header com logo e data de geração
 - Resumo (total créditos, débitos, saldo)
 - Filtros aplicados
@@ -148,6 +150,7 @@ async function exportReport(format: 'pdf' | 'excel') {
 ## Permissões
 
 Usar permissão existente:
+
 - `report.view` - Permite visualizar e exportar relatórios
 
 ---
@@ -167,11 +170,13 @@ Usar permissão existente:
 ## Output Esperado
 
 ### Backend
+
 - `ReportExportService`
 - Endpoint `GET /api/reports/export`
 - View Blade para PDF
 - Testes Feature para exportação
 
 ### Frontend
+
 - Botões de exportação na tela de relatórios
 - Função de download com filtros atuais

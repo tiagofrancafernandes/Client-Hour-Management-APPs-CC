@@ -1,9 +1,11 @@
 # TASK-02-11 — Test Customer Data Isolation and Access Control
 
 ## STATUS
+
 ✅ DONE
 
 ## RELATED PLAN
+
 [PLAN-TASK-02-customer-login.md](../plans/PLAN-TASK-02-customer-login.md) - Step 12
 
 ## DESCRIPTION
@@ -15,6 +17,7 @@ Comprehensive testing to verify customer data isolation and access control at AP
 ### Backend Testing
 
 #### API Endpoint Tests
+
 - [ ] Customer GET /api/clients shows only their client
 - [ ] Customer GET /api/clients/:id (other) returns 403
 - [ ] Customer GET /api/clients/:id (own) returns 200
@@ -27,12 +30,14 @@ Comprehensive testing to verify customer data isolation and access control at AP
 - [ ] Admin endpoints unaffected by customer filtering
 
 #### Permission Tests
+
 - [ ] Customer has role 'customer'
 - [ ] Customer has correct permissions
 - [ ] Customer missing create/update/delete permissions
 - [ ] Query scopes work correctly
 
 #### Data Isolation Tests
+
 - [ ] Customer A cannot see Client B data
 - [ ] Customer A cannot see Wallet B (from Client B)
 - [ ] Customer A cannot see Ledger B entries
@@ -41,6 +46,7 @@ Comprehensive testing to verify customer data isolation and access control at AP
 ### Frontend Testing
 
 #### UI Tests
+
 - [ ] Customer login loads dashboard
 - [ ] ClientsView shows only customer's client
 - [ ] ReportsView hides client selector
@@ -49,12 +55,14 @@ Comprehensive testing to verify customer data isolation and access control at AP
 - [ ] Ledger entries filtered to own wallets
 
 #### Permission Tests
+
 - [ ] Customer cannot see "Add Client" button
 - [ ] Customer cannot see create wallet option
 - [ ] Customer cannot see internal notes
 - [ ] Customer cannot edit wallet details
 
 ### Integration Tests
+
 - [ ] Complete login flow for customer
 - [ ] Customer dashboard loads correctly
 - [ ] Navigation shows customer-appropriate options
@@ -119,6 +127,7 @@ npm run test
 ---
 
 ## NOTES
+
 - Data isolation is critical for security
 - Every endpoint must verify customer access
 - Frontend filtering prevents confusion but backend is authoritative

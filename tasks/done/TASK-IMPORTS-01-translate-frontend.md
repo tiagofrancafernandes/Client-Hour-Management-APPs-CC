@@ -2,6 +2,7 @@
 # TASK-IMPORTS-01 — Translate Imports Feature Frontend to English
 
 ## STATUS
+
 ✅ DONE
 
 ## DESCRIPTION
@@ -26,5 +27,4 @@ Minor TypeScript/linters warnings may remain (unrelated to translations). Date f
 ---
 
 Original task file content is archived in `tasks/archive` if needed.
-
 ```

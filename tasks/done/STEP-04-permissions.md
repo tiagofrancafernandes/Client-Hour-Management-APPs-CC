@@ -22,12 +22,14 @@ Implement access control.
 ## RULES
 
 Only admin can:
+
 - create clients
 - create wallets
 - insert credits
 - create adjustments
 
 Users can:
+
 - insert debits
 - view reports
 

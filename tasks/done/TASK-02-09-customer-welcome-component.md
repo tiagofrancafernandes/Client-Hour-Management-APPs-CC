@@ -1,9 +1,11 @@
 # TASK-02-09 — Create Customer Welcome/Dashboard Component
 
 ## STATUS
+
 ✅ DONE
 
 ## RELATED PLAN
+
 [PLAN-TASK-02-customer-login.md](../plans/PLAN-TASK-02-customer-login.md) - Step 11
 
 ## DESCRIPTION
@@ -15,6 +17,7 @@ Create a simple welcome/dashboard component for customer users showing their key
 ### Customer Dashboard Component (`src/components/CustomerDashboard.vue`)
 
 Display:
+
 1. Welcome message with customer's client name
 2. Current wallet balance and hours
 3. Recent ledger entries (last 5)
@@ -22,6 +25,7 @@ Display:
 5. Simplified, focused UI
 
 ### Implementation
+
 ```vue
 <template>
     <div class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-lg p-6">
@@ -42,6 +46,7 @@ Display:
 ```
 
 ### Implementation Steps
+
 1. Create CustomerDashboard.vue component
 2. Fetch customer's client data
 3. Calculate total hours from wallets
@@ -50,10 +55,12 @@ Display:
 6. Style with TailwindCSS
 
 ### Files to Create/Modify
+
 - `src/components/CustomerDashboard.vue` (new)
 - `src/views/DashboardView.vue` (show dashboard for customers)
 
 ### Testing
+
 - Component renders for customer users
 - Shows correct client name
 - Total hours calculated correctly
@@ -62,6 +69,7 @@ Display:
 ---
 
 ## NOTES
+
 - Customer dashboard provides quick overview
 - Simplified compared to admin dashboard
 - Can be expanded later with more features

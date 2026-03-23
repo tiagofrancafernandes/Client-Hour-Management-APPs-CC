@@ -38,12 +38,12 @@ class LedgerEntry extends Model
 
 ### 3. Endpoints API
 
-| Method | Endpoint | Description | Permission |
-|--------|----------|-------------|------------|
-| GET | `/api/tags` | Listar todas as tags | `tag.view_any` |
-| POST | `/api/tags` | Criar nova tag | `tag.create` |
-| PUT | `/api/tags/{id}` | Atualizar tag | `tag.update` |
-| DELETE | `/api/tags/{id}` | Excluir tag | `tag.delete` |
+| Method | Endpoint         | Description          | Permission     |
+| ------ | ---------------- | -------------------- | -------------- |
+| GET    | `/api/tags`      | Listar todas as tags | `tag.view_any` |
+| POST   | `/api/tags`      | Criar nova tag       | `tag.create`   |
+| PUT    | `/api/tags/{id}` | Atualizar tag        | `tag.update`   |
+| DELETE | `/api/tags/{id}` | Excluir tag          | `tag.delete`   |
 
 ### 4. Atualizar Endpoints Existentes
 
@@ -65,12 +65,14 @@ class LedgerEntry extends Model
 Criar componente reutilizável para seleção/criação de tags:
 
 **Funcionalidades:**
+
 - Dropdown com tags existentes (autocomplete)
 - Criar nova tag ao digitar e pressionar `Enter` ou `,`
 - Exibir tags selecionadas como chips removíveis
 - Busca em tempo real enquanto digita
 
 **Props:**
+
 - `modelValue`: array de tags selecionadas
 - `placeholder`: texto placeholder
 - `allowCreate`: boolean para permitir criação inline
@@ -78,14 +80,17 @@ Criar componente reutilizável para seleção/criação de tags:
 ### 2. Integração nas Telas
 
 #### Formulário de Ledger Entry
+
 - Adicionar campo de tags ao criar débito/crédito
 - Tags opcionais
 
 #### Filtros de Relatório
+
 - Adicionar seletor de tags no formulário de filtros
 - Filtrar relatório por tags selecionadas (espaço já existe)
 
 #### Tela de Gerenciamento de Tags (opcional)
+
 - CRUD de tags para administradores
 - Listar, criar, editar, excluir tags
 
@@ -100,6 +105,7 @@ Criar componente reutilizável para seleção/criação de tags:
 ## Permissões
 
 Já existentes no seeder:
+
 - `tag.view`
 - `tag.view_any`
 - `tag.create`
@@ -122,6 +128,7 @@ Já existentes no seeder:
 ## Output Esperado
 
 ### Backend
+
 - Migration para relação ledger_entry <-> tags
 - TagController atualizado (se necessário)
 - LedgerEntryController aceita tags
@@ -129,6 +136,7 @@ Já existentes no seeder:
 - Testes Feature para tags
 
 ### Frontend
+
 - Componente `TagInput.vue`
 - Composable `useTags.ts`
 - Integração em formulários de ledger entry

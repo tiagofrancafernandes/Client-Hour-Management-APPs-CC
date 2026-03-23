@@ -7,13 +7,16 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 **Hours Ledger System** — A client hour tracking application following a **ledger-based model**.
 
 ### Tech Stack
+
 - **Backend**: Laravel 12 (PHP 8.2+) with Sanctum authentication
 - **Frontend**: Vue 3 + Vite + TypeScript + TailwindCSS v4
 - **Database**: PostgreSQL 16
 - **Cache**: Redis 7
 - **Containerization**: Docker Compose
+- In this project, whenever you update the UI, use the /tailwind-ui skil
 
 ### Key Directories
+
 ```
 ├── backend/           # Laravel API (separate git repo)
 ├── frontend/          # Vue 3 customer app (separate git repo)
@@ -31,6 +34,7 @@ This system follows strict **append-only ledger** principles:
 - `LedgerEntry.hours` is signed (positive = credit, negative = debit)
 
 ### Domain Entities
+
 - **Client** → has many Wallets
 - **Wallet** → belongs to Client, has many LedgerEntries (balance is derived)
 - **LedgerEntry** → immutable record of hour changes
@@ -39,11 +43,13 @@ This system follows strict **append-only ledger** principles:
 ## Development Commands
 
 All commands use Docker with `--env-file .env.docker`. Common prefix:
+
 ```bash
 dc="docker compose --env-file .env.docker"
 ```
 
 ### Starting the Environment
+
 ```bash
 # First time (with build)
 docker compose --env-file .env.docker up -d --build
@@ -56,6 +62,7 @@ docker compose --env-file .env.docker down
 ```
 
 ### Backend (Laravel)
+
 ```bash
 # Artisan commands
 docker compose --env-file .env.docker exec backend php artisan migrate
@@ -71,6 +78,7 @@ docker compose --env-file .env.docker exec backend ./vendor/bin/pint
 ```
 
 ### Frontend (Vue 3)
+
 ```bash
 # NPM commands
 docker compose --env-file .env.docker exec frontend npm install
@@ -79,6 +87,7 @@ docker compose --env-file .env.docker exec frontend npm run dev
 ```
 
 ### Database
+
 ```bash
 # PostgreSQL CLI
 docker compose --env-file .env.docker exec postgres psql -U f2apps -d f2apps
@@ -88,6 +97,7 @@ docker compose --env-file .env.docker exec postgres pg_dump -U f2apps f2apps > b
 ```
 
 ### View Logs
+
 ```bash
 docker compose --env-file .env.docker logs -f backend
 docker compose --env-file .env.docker logs -f frontend
@@ -97,18 +107,19 @@ docker compose --env-file .env.docker logs -f frontend
 
 After configuring `/etc/hosts` (see DOCKER-SETUP.md):
 
-| Application | URL |
-|-------------|-----|
-| API | http://api.local.tiagoapps.com.br |
-| Frontend | http://app.local.tiagoapps.com.br |
-| Landing Page | http://local.tiagoapps.com.br |
-| Backoffice | http://admin.local.tiagoapps.com.br |
+| Application  | URL                                 |
+| ------------ | ----------------------------------- |
+| API          | http://api.local.tiagoapps.com.br   |
+| Frontend     | http://app.local.tiagoapps.com.br   |
+| Landing Page | http://local.tiagoapps.com.br       |
+| Backoffice   | http://admin.local.tiagoapps.com.br |
 
 Direct ports: Frontend `:5173`, Landing `:3000`, Backoffice `:3001`
 
 ## Architecture Guidelines
 
 ### Backend (Laravel)
+
 - **Thin controllers** — Business logic goes in Service classes
 - Services for logic (e.g., `BalanceCalculatorService`, `ReportService`)
 - Use `$request->input('field')` instead of `$request->field`
@@ -116,6 +127,7 @@ Direct ports: Frontend `:5173`, Landing `:3000`, Backoffice `:3001`
 - Sanctum for API authentication
 
 ### Frontend (Vue 3)
+
 - Composition API with TypeScript
 - TailwindCSS v4 (uses `@import "tailwindcss"`, not `@tailwind` directives)
 - Object syntax for conditional classes (no ternary in `:class`)
@@ -156,44 +168,44 @@ toast.warning('warning!');
 ```
 
 ## Using buttons
+
 To use <button> preffer use global `CButton` component (`src/components/CButton.vue` not need import this) and use presets to style
 Example:
+
 ```vue
 <template>
-<CButton preset="outlined-black" class="inline-flex items-center">
-    Unlock
-</CButton>
+    <CButton preset="outlined-black" class="inline-flex items-center">Unlock</CButton>
 </template>
 ```
 
-## Using Custom Components (src/components/C*.vue file)
+## Using Custom Components (src/components/C\*.vue file)
 
 Example:
+
 ```vue
 <template>
-<!-- src/components/CButton.vue -->
- <CButton label="My Button label" />
+    <!-- src/components/CButton.vue -->
+    <CButton label="My Button label" />
 
-<!-- src/components/CDropZone.vue -->
- <CDropZone label="My DropZone label" />
+    <!-- src/components/CDropZone.vue -->
+    <CDropZone label="My DropZone label" />
 
-<!-- src/components/CInput.vue -->
- <CInput label="My Input label" />
+    <!-- src/components/CInput.vue -->
+    <CInput label="My Input label" />
 
-<!-- src/components/CSelect.vue -->
- <CSelect label="My Select label"  >
-
-    <option>Opção</option>
- </CSelect>
-<!-- src/components/CTextarea.vue -->
- <CTextarea label="My Textarea label" />
-
+    <!-- src/components/CSelect.vue -->
+    <CSelect label="My Select label">
+        <option>Opção</option>
+    </CSelect>
+    <!-- src/components/CTextarea.vue -->
+    <CTextarea label="My Textarea label" />
 </template>
 ```
 
 ### Design System
 
 The design system file contains comprehensive UI specifications:
+
 - **Color Palette**: Primary red (#dc2626), neutral grays, status colors
 - **Typography**: Font families, sizes, and weights
 - **Components**: Buttons, cards, inputs, tables, badges, navigation
@@ -208,6 +220,7 @@ The design system file contains comprehensive UI specifications:
 4. **Consistency**: Maintain uniform spacing, colors, and component styles
 
 **Refer to `frontend/design/design.json` when:**
+
 - Implementing new UI components
 - Styling forms, buttons, or navigation
 - Choosing colors or spacing values

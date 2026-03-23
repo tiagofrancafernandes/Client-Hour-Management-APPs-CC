@@ -4,5 +4,4 @@
 (Archived copy: merged into `TASK-03-credit-purchase.md`)
 
 Original content archived.
-
 ```

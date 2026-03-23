@@ -7,6 +7,7 @@ Create database migrations ONLY.
 ---
 
 ## DATABASE
+
 - PostgreSQL
 - Use numeric for hours
 - Use foreign keys
@@ -17,12 +18,14 @@ Create database migrations ONLY.
 ## TABLES TO CREATE
 
 ### clients
+
 - id
 - name
 - notes (nullable)
 - timestamps
 
 ### wallets
+
 - id
 - client_id
 - name
@@ -31,6 +34,7 @@ Create database migrations ONLY.
 - timestamps
 
 ### ledger_entries
+
 - id
 - wallet_id
 - hours (numeric, signed)
@@ -40,10 +44,12 @@ Create database migrations ONLY.
 - timestamps
 
 ### tags (optional)
+
 - id
 - name
 
 ### ledger_entry_tag (pivot, optional)
+
 - ledger_entry_id
 - tag_id
 

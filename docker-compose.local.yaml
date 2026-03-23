@@ -1,4 +1,4 @@
-# Tiago Apps Docker Compose - Development Environment
+# F2Apps Docker Compose - Development Environment
 # ==============================================
 #
 # Usage:
@@ -15,7 +15,7 @@
 #   - admin.local.tiagoapps.com.br -> Backoffice (Nuxt 4)
 #   - api.local.tiagoapps.com.br   -> API (Laravel)
 
-name: tiagoapps
+name: f2apps
 
 services:
     # ===========================================
@@ -25,11 +25,12 @@ services:
     # Nginx Reverse Proxy
     nginx:
         image: nginx:alpine
-        container_name: tiagoapps-nginx
+        container_name: f2apps-nginx
         restart: unless-stopped
         ports:
             - '${NGINX_HTTP_PORT:-80}:80'
             - '${NGINX_HTTPS_PORT:-443}:443'
+            - '${BACKEND_PORT:-8000}:8000'
         volumes:
             - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
             - ./docker/nginx/api.conf:/etc/nginx/conf.d/api.conf:ro
@@ -43,10 +44,14 @@ services:
         depends_on:
             - backend
             - frontend
-            - landingpage
-            - backoffice
+            # - landingpage
+            # - backoffice
+        profiles:
+            - default
+            - backend
+            - server
         networks:
-            tiagoapps-network:
+            f2apps-network:
                 aliases:
                     - local.tiagoapps.com.br
                     - app.local.tiagoapps.com.br
@@ -58,22 +63,26 @@ services:
     # PostgreSQL Database
     postgres:
         image: postgres:16-alpine
-        container_name: tiagoapps-postgres
+        container_name: f2apps-postgres
         restart: unless-stopped
         ports:
             - '${POSTGRES_PORT:-5432}:5432'
         environment:
-            POSTGRES_USER: ${POSTGRES_USER:-tiagoapps}
+            POSTGRES_USER: ${POSTGRES_USER:-f2apps}
             POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-f2apps_secret}
-            POSTGRES_DB: ${POSTGRES_DB:-tiagoapps}
+            POSTGRES_DB: ${POSTGRES_DB:-f2apps}
             PGDATA: /var/lib/postgresql/data/pgdata
         volumes:
             - postgres-data:/var/lib/postgresql/data
             - ./docker/postgres/init:/docker-entrypoint-initdb.d:ro
         networks:
-            - tiagoapps-network
+            - f2apps-network
+        profiles:
+            - default
+            - backend
+            - dbs
         healthcheck:
-            test: ['CMD-SHELL', 'pg_isready -U ${POSTGRES_USER:-tiagoapps} -d ${POSTGRES_DB:-tiagoapps}']
+            test: ['CMD-SHELL', 'pg_isready -U ${POSTGRES_USER:-f2apps} -d ${POSTGRES_DB:-f2apps}']
             interval: 10s
             timeout: 5s
             retries: 5
@@ -81,15 +90,19 @@ services:
     # Redis Cache
     redis:
         image: redis:7-alpine
-        container_name: tiagoapps-redis
+        container_name: f2apps-redis
         restart: unless-stopped
         ports:
             - '${REDIS_PORT:-6379}:6379'
         command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD:-f2apps_redis}
         volumes:
             - redis-data:/data
+        profiles:
+            - default
+            - backend
+            - dbs
         networks:
-            - tiagoapps-network
+            - f2apps-network
         healthcheck:
             test: ['CMD', 'redis-cli', '-a', '${REDIS_PASSWORD:-f2apps_redis}', 'ping']
             interval: 10s
@@ -102,94 +115,89 @@ services:
 
     # Laravel Backend API
     backend:
+        env_file: ${DOCKER_ENV_FILE:-.env.docker}
         build:
             context: .
             dockerfile: ./docker/laravel/Dockerfile.dev
             args:
                 USER_ID: ${USER_ID:-1000}
                 GROUP_ID: ${GROUP_ID:-1000}
-        container_name: tiagoapps-backend
+        container_name: f2apps-backend
         restart: unless-stopped
         working_dir: /var/www/html/backend
         volumes:
             - ./backend:/var/www/html/backend
             - php-logs:/var/log/php
+            - ./docker/log/xdebug.log:/var/log/php/xdebug.log:rw
             # Uncomment to use custom hosts file
             # - ./docker/infra/etc-hosts:/etc/hosts:ro
-        environment:
-            APP_ENV: ${APP_ENV:-local}
-            APP_DEBUG: ${APP_DEBUG:-true}
-            APP_URL: http://api.local.tiagoapps.com.br
-            DB_CONNECTION: pgsql
-            DB_HOST: postgres
-            DB_PORT: 5432
-            DB_DATABASE: ${POSTGRES_DB:-tiagoapps}
-            DB_USERNAME: ${POSTGRES_USER:-tiagoapps}
-            DB_PASSWORD: ${POSTGRES_PASSWORD:-f2apps_secret}
-            REDIS_HOST: redis
-            REDIS_PASSWORD: ${REDIS_PASSWORD:-f2apps_redis}
-            REDIS_PORT: 6379
-            CACHE_DRIVER: redis
-            SESSION_DRIVER: redis
-            QUEUE_CONNECTION: redis
-            # Domain environment variables
-            SAAS_DOMAIN: local.tiagoapps.com.br
-            CUSTOMER_APP_DOMAIN: app.local.tiagoapps.com.br
-            BACKOFFICE_DOMAIN: admin.local.tiagoapps.com.br
-            API_DOMAIN: api.local.tiagoapps.com.br
+        # environment:
+        #     APP_ENV: ${APP_ENV:-local}
         depends_on:
             postgres:
                 condition: service_healthy
             redis:
                 condition: service_healthy
         networks:
-            - tiagoapps-network
+            - f2apps-network
+        profiles:
+            - default
+            - backend
         extra_hosts:
             - 'host.docker.internal:host-gateway'
 
     # Vue 3 Customer Frontend
     frontend:
+        env_file: ${DOCKER_ENV_FILE:-.env.docker}
         build:
             context: .
             dockerfile: ./docker/node/Dockerfile.vue.dev
-        container_name: tiagoapps-frontend
+            args:
+                USER_ID: ${USER_ID:-1000}
+                GROUP_ID: ${GROUP_ID:-1000}
+        container_name: f2apps-frontend
         restart: unless-stopped
         working_dir: /app
         ports:
             - '${FRONTEND_PORT:-5173}:5173'
         volumes:
             - ./frontend:/app
-            - /app/node_modules
+            - frontend-node-modules:/app/node_modules
             # Uncomment to use custom hosts file
             # - ./docker/infra/etc-hosts:/etc/hosts:ro
         environment:
             NODE_ENV: development
-            VITE_API_URL: http://api.local.tiagoapps.com.br
-            VITE_APP_URL: http://app.local.tiagoapps.com.br
+            VITE_API_URL: ${VITE_API_URL:-http://api.local.tiagoapps.com.br}
+            VITE_APP_URL: ${VITE_APP_URL:-http://app.local.tiagoapps.com.br}
             # Domain environment variables
-            VITE_SAAS_DOMAIN: local.tiagoapps.com.br
-            VITE_CUSTOMER_APP_DOMAIN: app.local.tiagoapps.com.br
-            VITE_BACKOFFICE_DOMAIN: admin.local.tiagoapps.com.br
-            VITE_API_DOMAIN: api.local.tiagoapps.com.br
-        command: sh -c "npm install && npm run dev -- --host 0.0.0.0"
+            VITE_SAAS_DOMAIN: ${VITE_SAAS_DOMAIN:-local.tiagoapps.com.br}
+            VITE_CUSTOMER_APP_DOMAIN: ${VITE_CUSTOMER_APP_DOMAIN:-app.local.tiagoapps.com.br}
+            VITE_BACKOFFICE_DOMAIN: ${VITE_BACKOFFICE_DOMAIN:-admin.local.tiagoapps.com.br}
+            VITE_API_DOMAIN: ${VITE_API_DOMAIN:-api.local.tiagoapps.com.br}
+        # command: sh -c "npm install && npm run dev -- --host 0.0.0.0"
+        command: npm run dev -- --host
         networks:
-            - tiagoapps-network
+            - f2apps-network
         extra_hosts:
             - 'host.docker.internal:host-gateway'
 
     # Nuxt 4 Landing Page
     landingpage:
+        env_file: ${DOCKER_ENV_FILE:-.env.docker}
         build:
             context: .
             dockerfile: ./docker/node/Dockerfile.nuxt.dev
-        container_name: tiagoapps-landingpage
+            args:
+                USER_ID: ${USER_ID:-1000}
+                GROUP_ID: ${GROUP_ID:-1000}
+        container_name: f2apps-landingpage
         restart: unless-stopped
         working_dir: /app
         ports:
             - '${LANDINGPAGE_PORT:-3000}:3000'
         volumes:
             - ./landingpage:/app
-            - /app/node_modules
+            - landingpage-node-modules:/app/node_modules
             # Uncomment to use custom hosts file
             # - ./docker/infra/etc-hosts:/etc/hosts:ro
         environment:
@@ -202,24 +210,31 @@ services:
             NUXT_PUBLIC_BACKOFFICE_DOMAIN: admin.local.tiagoapps.com.br
             NUXT_PUBLIC_API_DOMAIN: api.local.tiagoapps.com.br
         command: sh -c "npm install && npm run dev -- --host 0.0.0.0"
+        profiles:
+            - front
+            - other
         networks:
-            - tiagoapps-network
+            - f2apps-network
         extra_hosts:
             - 'host.docker.internal:host-gateway'
 
     # Nuxt 4 Backoffice
     backoffice:
+        env_file: ${DOCKER_ENV_FILE:-.env.docker}
         build:
             context: .
             dockerfile: ./docker/node/Dockerfile.nuxt.dev
-        container_name: tiagoapps-backoffice
+            args:
+                USER_ID: ${USER_ID:-1000}
+                GROUP_ID: ${GROUP_ID:-1000}
+        container_name: f2apps-backoffice
         restart: unless-stopped
         working_dir: /app
         ports:
             - '${BACKOFFICE_PORT:-3001}:3000'
         volumes:
             - ./frontend-backoffice:/app
-            - /app/node_modules
+            - backoffice-node-modules:/app/node_modules
             # Uncomment to use custom hosts file
             # - ./docker/infra/etc-hosts:/etc/hosts:ro
         environment:
@@ -232,8 +247,11 @@ services:
             NUXT_PUBLIC_BACKOFFICE_DOMAIN: admin.local.tiagoapps.com.br
             NUXT_PUBLIC_API_DOMAIN: api.local.tiagoapps.com.br
         command: sh -c "npm install && npm run dev -- --host 0.0.0.0"
+        profiles:
+            - front
+            - other
         networks:
-            - tiagoapps-network
+            - f2apps-network
         extra_hosts:
             - 'host.docker.internal:host-gateway'
 
@@ -243,13 +261,14 @@ services:
 
     # Laravel Queue Worker
     queue-worker:
+        env_file: ${DOCKER_ENV_FILE:-.env.docker}
         build:
             context: .
             dockerfile: ./docker/laravel/Dockerfile.dev
             args:
                 USER_ID: ${USER_ID:-1000}
                 GROUP_ID: ${GROUP_ID:-1000}
-        container_name: tiagoapps-queue-worker
+        container_name: f2apps-queue-worker
         restart: unless-stopped
         working_dir: /var/www/html/backend
         volumes:
@@ -259,8 +278,8 @@ services:
             DB_CONNECTION: pgsql
             DB_HOST: postgres
             DB_PORT: 5432
-            DB_DATABASE: ${POSTGRES_DB:-tiagoapps}
-            DB_USERNAME: ${POSTGRES_USER:-tiagoapps}
+            DB_DATABASE: ${POSTGRES_DB:-f2apps}
+            DB_USERNAME: ${POSTGRES_USER:-f2apps}
             DB_PASSWORD: ${POSTGRES_PASSWORD:-f2apps_secret}
             REDIS_HOST: redis
             REDIS_PASSWORD: ${REDIS_PASSWORD:-f2apps_redis}
@@ -270,19 +289,20 @@ services:
             - backend
             - redis
         networks:
-            - tiagoapps-network
+            - f2apps-network
         profiles:
             - workers
 
     # Laravel Scheduler
     scheduler:
+        env_file: ${DOCKER_ENV_FILE:-.env.docker}
         build:
             context: .
             dockerfile: ./docker/laravel/Dockerfile.dev
             args:
                 USER_ID: ${USER_ID:-1000}
                 GROUP_ID: ${GROUP_ID:-1000}
-        container_name: tiagoapps-scheduler
+        container_name: f2apps-scheduler
         restart: unless-stopped
         working_dir: /var/www/html/backend
         volumes:
@@ -292,8 +312,8 @@ services:
             DB_CONNECTION: pgsql
             DB_HOST: postgres
             DB_PORT: 5432
-            DB_DATABASE: ${POSTGRES_DB:-tiagoapps}
-            DB_USERNAME: ${POSTGRES_USER:-tiagoapps}
+            DB_DATABASE: ${POSTGRES_DB:-f2apps}
+            DB_USERNAME: ${POSTGRES_USER:-f2apps}
             DB_PASSWORD: ${POSTGRES_PASSWORD:-f2apps_secret}
             REDIS_HOST: redis
             REDIS_PASSWORD: ${REDIS_PASSWORD:-f2apps_redis}
@@ -302,7 +322,7 @@ services:
         depends_on:
             - backend
         networks:
-            - tiagoapps-network
+            - f2apps-network
         profiles:
             - workers
 
@@ -310,7 +330,7 @@ services:
 # Networks
 # ===========================================
 networks:
-    tiagoapps-network:
+    f2apps-network:
         driver: bridge
         ipam:
             config:
@@ -327,4 +347,10 @@ volumes:
     nginx-logs:
         driver: local
     php-logs:
+        driver: local
+    frontend-node-modules:
+        driver: local
+    landingpage-node-modules:
+        driver: local
+    backoffice-node-modules:
         driver: local

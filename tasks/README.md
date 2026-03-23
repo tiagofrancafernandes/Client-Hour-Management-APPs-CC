@@ -13,9 +13,11 @@
 ## Fluxo das tarefas
 
 ### Fluxo saudável
+
 - planejamento > todo > doing > done
 
 ### Fluxo possível
+
 - plan > backlog ... (done|archive)
 - plan > todo ... (done|archive)
 - (plan|backlog|todo) > doing > done
@@ -26,6 +28,7 @@
 - (plan|backlog|todo) > archive
 
 ## Resumo
+
 > A organização/estrutura serve mais para compreensão visual do que foi feito, será feito ou está sendo feito.
 
 ## Arquivos de exemplo

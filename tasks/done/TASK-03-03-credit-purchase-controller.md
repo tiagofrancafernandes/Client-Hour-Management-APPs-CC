@@ -1,9 +1,11 @@
 # TASK-03-03 — Create Credit Purchase API Endpoints
 
 ## STATUS
+
 ✅ DONE
 
 ## RELATED PLAN
+
 [PLAN-TASK-03-credit-purchase.md](../plans/PLAN-TASK-03-credit-purchase.md) - Step 05
 
 ## DESCRIPTION
@@ -15,6 +17,7 @@ Create CreditPurchaseController with endpoints for creating and viewing credit p
 ### Controller: `CreditPurchaseController`
 
 **POST /api/credit-purchases** (Create)
+
 ```php
 public function store(Request $request): JsonResponse
 {
@@ -27,6 +30,7 @@ public function store(Request $request): JsonResponse
 ```
 
 **GET /api/credit-purchases/{id}** (Show)
+
 ```php
 public function show(CreditPurchase $purchase): JsonResponse
 {
@@ -36,6 +40,7 @@ public function show(CreditPurchase $purchase): JsonResponse
 ```
 
 **GET /api/credit-purchases** (List customer's purchases)
+
 ```php
 public function index(): JsonResponse
 {
@@ -46,6 +51,7 @@ public function index(): JsonResponse
 ```
 
 ### Implementation Steps
+
 1. Create `CreditPurchaseController` in `Http/Controllers/Api`
 2. Implement store() with validation
 3. Implement show() with authorization
@@ -54,10 +60,12 @@ public function index(): JsonResponse
 6. Test endpoints with curl
 
 ### Files to Create/Modify
+
 - `app/Http/Controllers/Api/CreditPurchaseController.php` (new)
 - `routes/api.php` (add routes)
 
 ### Testing
+
 - POST creates valid purchase
 - GET /show returns purchase
 - GET /index filters customer purchases
@@ -66,5 +74,6 @@ public function index(): JsonResponse
 ---
 
 ## NOTES
+
 - Purchases created with status='pending'
 - Next step creates payment tracking
