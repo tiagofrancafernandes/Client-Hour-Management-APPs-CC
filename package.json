@@ -2,14 +2,14 @@
     "type": "module",
     "scripts": {
         "docker": "docker-compose --env-file .env.docker --profile default",
-        "docker:ps": "npm run docker -- ps",
-        "docker:stop": "npm run docker -- stop",
-        "docker:exec": "npm run docker -- exec",
-        "docker:up": "docker-compose --env-file .env.docker --profile default up",
-        "docker:down": "docker-compose --env-file .env.docker --profile default down",
-        "docker:recreate": "npm run docker:down && npm run docker:up",
-        "dev": "npm run docker:up",
+        "dk:ps": "npm run docker -- ps",
+        "dk:stop": "npm run docker -- stop",
+        "dk:exec": "npm run docker -- exec",
+        "dk:up": "docker-compose --env-file .env.docker --profile default up",
+        "dk:down": "docker-compose --env-file .env.docker --profile default down",
+        "dk:recreate": "npm run dk:down && npm run dk:up",
+        "dev": "npm run dk:up",
         "open-in-editor-server": "node frontend/open-in-editor-server.js",
-        "start": "npm run docker:up"
+        "start": "npm run dk:up"
     }
 }
