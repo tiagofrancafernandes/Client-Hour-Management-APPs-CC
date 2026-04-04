@@ -11,5 +11,8 @@
         "dev": "npm run dk:up",
         "open-in-editor-server": "node frontend/open-in-editor-server.js",
         "start": "npm run dk:up"
+    },
+    "devDependencies": {
+        "vue-eslint-parser": "^10.4.0"
     }
 }
