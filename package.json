@@ -1,6 +1,10 @@
 {
     "type": "module",
     "scripts": {
+        "concurrently": "npx concurrently",
+        "concurrently:demo:1": "npx concurrently -n php1,php2 -c blue,green \"npm:dev:php1\" \"npm:dev:php2\"",
+        "dev:php1": "php -S 0.0.0.0:8004 _info.php",
+        "dev:php2": "php -S 0.0.0.0:8005 _info.php",
         "docker": "docker-compose --env-file .env.docker --profile default",
         "dk:ps": "npm run docker -- ps",
         "dk:stop": "npm run docker -- stop",
@@ -8,8 +12,10 @@
         "dk:up": "docker-compose --env-file .env.docker --profile default up",
         "dk:down": "docker-compose --env-file .env.docker --profile default down",
         "dk:recreate": "npm run dk:down && npm run dk:up",
-        "dev": "npm run dk:up",
+        "old:dev": "npm run dk:up",
+        "dev": "npx concurrently -n docker,openineditor -c blue,green \"npm:dk:up\" \"npm:open-in-editor-server\"",
         "open-in-editor-server": "node frontend/open-in-editor-server.js",
+        "dev:open-in-editor-server": "node frontend/open-in-editor-server.js",
         "start": "npm run dk:up"
     },
     "devDependencies": {
