@@ -47,6 +47,7 @@ dist_tmp_build/
 *no*commit*
 *No*Commit*
 *NO*COMMIT*
+*.bak
 *.bkp.*
 *.localonly.*
 *.bkp
@@ -55,6 +56,9 @@ dist_tmp_build/
 *.out
 *.zip
 _ide_helper*
+*.del
+*.del.*
+
 .local-aliases.sh
 .claude-session-id
 
