@@ -6,7 +6,7 @@
         "dev:php1": "php -S 0.0.0.0:8004 _info.php",
         "dev:php2": "php -S 0.0.0.0:8005 _info.php",
         "docker": "docker-compose --env-file .env.docker --profile default",
-        "dk:ps": "npm run docker -- ps",
+        "dk:ps": "npm run docker -- ps --format \"table {{.Service}}   {{.Ports}}   {{.Status}}   {{.Image}}\"",
         "dk:stop": "npm run docker -- stop",
         "dk:exec": "npm run docker -- exec",
         "dk:up": "docker-compose --env-file .env.docker --profile default up",

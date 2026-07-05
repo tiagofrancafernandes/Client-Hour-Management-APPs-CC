@@ -16,7 +16,7 @@ To understand the project before making changes, read these files:
 
 ## Project Overview
 
-**Hours Ledger System** is a client hour tracking application that follows a strict **ledger-based model**.
+**Hour Ledger System** is a client hour tracking application that follows a strict **ledger-based model**.
 
 ### Applications
 

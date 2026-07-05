@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-**Hours Ledger System** — A client hour tracking application following a **ledger-based model**.
+**Hour Ledger System** — A client hour tracking application following a **ledger-based model**.
 
 ### Tech Stack
 

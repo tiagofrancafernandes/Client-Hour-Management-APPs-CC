@@ -1,4 +1,4 @@
-# Hours Ledger System — Execution Plan
+# Hour Ledger System — Execution Plan
 
 ## Project Structure
 
