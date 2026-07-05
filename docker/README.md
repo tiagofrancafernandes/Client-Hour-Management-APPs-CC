@@ -30,10 +30,10 @@ docker compose --env-file .env.docker up -d
 
 | Aplicação    | URL                                 |
 | ------------ | ----------------------------------- |
-| Landing Page | http://local.tiagoapps.com.br       |
-| Frontend     | http://app.local.tiagoapps.com.br   |
-| Backoffice   | http://admin.local.tiagoapps.com.br |
-| API          | http://api.local.tiagoapps.com.br   |
+| Landing Page | http://hourledger.local.com       |
+| Frontend     | http://app.hourledger.local.com   |
+| Backoffice   | http://admin.hourledger.local.com |
+| API          | http://api.hourledger.local.com   |
 
 ---
 

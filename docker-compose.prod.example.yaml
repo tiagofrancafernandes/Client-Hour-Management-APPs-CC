@@ -40,10 +40,10 @@ services:
         networks:
             tiagoapps-network:
                 aliases:
-                    - local.tiagoapps.com.br
-                    - app.local.tiagoapps.com.br
-                    - admin.local.tiagoapps.com.br
-                    - api.local.tiagoapps.com.br
+                    - hourledger.local.com
+                    - app.hourledger.local.com
+                    - admin.hourledger.local.com
+                    - api.hourledger.local.com
         healthcheck:
             test: ['CMD', 'nginx', '-t']
             interval: 30s

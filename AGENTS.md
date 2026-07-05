@@ -23,13 +23,13 @@ To understand the project before making changes, read these files:
 #### Frontend Application
 
 - Path: `./frontend`
-- URL: `http://local-frontend.com`
+- URL: `https://hourledger.local.com`
 
 #### Backend Application
 
 - Path: `./backend`
-- URL: `http://local-8000.com`
-- API URL: `http://local-8000.com/api`
+- URL: `https://api.hourledger.local.com`
+- API URL: `https://api.hourledger.local.com/api`
 
 ## Admin Access
 

@@ -175,10 +175,10 @@ sudo ./docker/infra/setup-hosts.sh
 sudo nano /etc/hosts
 
 # Adicione as seguintes linhas ao final do arquivo:
-127.0.0.1 local.tiagoapps.com.br
-127.0.0.1 app.local.tiagoapps.com.br
-127.0.0.1 admin.local.tiagoapps.com.br
-127.0.0.1 api.local.tiagoapps.com.br
+127.0.0.1 hourledger.local.com
+127.0.0.1 app.hourledger.local.com
+127.0.0.1 admin.hourledger.local.com
+127.0.0.1 api.hourledger.local.com
 
 # Salve e feche (Ctrl+O, Enter, Ctrl+X)
 ```
@@ -302,10 +302,10 @@ docker compose --env-file .env.docker down -v
 
 | Aplicação    | URL                                 | Descrição             |
 | ------------ | ----------------------------------- | --------------------- |
-| Landing Page | http://local.tiagoapps.com.br       | Site institucional    |
-| Frontend     | http://app.local.tiagoapps.com.br   | Painel do cliente     |
-| Backoffice   | http://admin.local.tiagoapps.com.br | Painel administrativo |
-| API          | http://api.local.tiagoapps.com.br   | API REST Laravel      |
+| Landing Page | http://hourledger.local.com       | Site institucional    |
+| Frontend     | http://app.hourledger.local.com   | Painel do cliente     |
+| Backoffice   | http://admin.hourledger.local.com | Painel administrativo |
+| API          | http://api.hourledger.local.com   | API REST Laravel      |
 
 ### URLs de acesso direto (debug/desenvolvimento)
 
@@ -687,16 +687,16 @@ APP_ENV=production
 APP_DEBUG=false
 
 # Domínios de produção
-SAAS_DOMAIN=tiagoapps.com.br
-CUSTOMER_APP_DOMAIN=app.tiagoapps.com.br
-BACKOFFICE_DOMAIN=admin.tiagoapps.com.br
-API_DOMAIN=api.tiagoapps.com.br
+SAAS_DOMAIN=hourledger.local.com
+CUSTOMER_APP_DOMAIN=app.hourledger.local.com
+BACKOFFICE_DOMAIN=admin.hourledger.local.com
+API_DOMAIN=api.hourledger.local.com
 
 # URLs completas (HTTPS em produção)
-SAAS_URL=https://tiagoapps.com.br
-CUSTOMER_APP_URL=https://app.tiagoapps.com.br
-BACKOFFICE_URL=https://admin.tiagoapps.com.br
-API_URL=https://api.tiagoapps.com.br
+SAAS_URL=https://hourledger.local.com
+CUSTOMER_APP_URL=https://app.hourledger.local.com
+BACKOFFICE_URL=https://admin.hourledger.local.com
+API_URL=https://api.hourledger.local.com
 
 # SENHAS FORTES E ÚNICAS!
 POSTGRES_PASSWORD=senha_muito_forte_e_unica_aqui
@@ -909,10 +909,10 @@ docker compose --env-file .env.docker up -d
 | `FRONTEND_PORT`       | Porta do frontend Vue (acesso direto)             | 5173                         |
 | `LANDINGPAGE_PORT`    | Porta da landing page (acesso direto)             | 3000                         |
 | `BACKOFFICE_PORT`     | Porta do backoffice (acesso direto)               | 3001                         |
-| `SAAS_DOMAIN`         | Domínio da landing page                           | local.tiagoapps.com.br       |
-| `CUSTOMER_APP_DOMAIN` | Domínio do frontend                               | app.local.tiagoapps.com.br   |
-| `BACKOFFICE_DOMAIN`   | Domínio do backoffice                             | admin.local.tiagoapps.com.br |
-| `API_DOMAIN`          | Domínio da API                                    | api.local.tiagoapps.com.br   |
+| `SAAS_DOMAIN`         | Domínio da landing page                           | hourledger.local.com       |
+| `CUSTOMER_APP_DOMAIN` | Domínio do frontend                               | app.hourledger.local.com   |
+| `BACKOFFICE_DOMAIN`   | Domínio do backoffice                             | admin.hourledger.local.com |
+| `API_DOMAIN`          | Domínio da API                                    | api.hourledger.local.com   |
 
 ---
 

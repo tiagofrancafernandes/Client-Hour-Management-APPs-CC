@@ -65,5 +65,5 @@ docker compose --env-file .env.docker exec frontend npm install
 
 | Application | URL                               |
 | ----------- | --------------------------------- |
-| API         | http://api.local.tiagoapps.com.br |
-| Frontend    | http://app.local.tiagoapps.com.br |
+| API         | http://api.hourledger.local.com |
+| Frontend    | http://app.hourledger.local.com |

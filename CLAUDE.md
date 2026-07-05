@@ -109,10 +109,10 @@ After configuring `/etc/hosts` (see DOCKER-SETUP.md):
 
 | Application  | URL                                 |
 | ------------ | ----------------------------------- |
-| API          | http://api.local.tiagoapps.com.br   |
-| Frontend     | http://app.local.tiagoapps.com.br   |
-| Landing Page | http://local.tiagoapps.com.br       |
-| Backoffice   | http://admin.local.tiagoapps.com.br |
+| API          | http://api.hourledger.local.com   |
+| Frontend     | http://app.hourledger.local.com   |
+| Landing Page | http://hourledger.local.com       |
+| Backoffice   | http://admin.hourledger.local.com |
 
 Direct ports: Frontend `:5173`, Landing `:3000`, Backoffice `:3001`
 

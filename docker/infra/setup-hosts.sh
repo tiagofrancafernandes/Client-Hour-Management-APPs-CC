@@ -14,10 +14,10 @@ MARKER="# Tiago Apps Local Development"
 
 # Domains to add
 DOMAINS=(
-    "127.0.0.1 local.tiagoapps.com.br"
-    "127.0.0.1 app.local.tiagoapps.com.br"
-    "127.0.0.1 admin.local.tiagoapps.com.br"
-    "127.0.0.1 api.local.tiagoapps.com.br"
+    "127.0.0.1 hourledger.local.com"
+    "127.0.0.1 app.hourledger.local.com"
+    "127.0.0.1 admin.hourledger.local.com"
+    "127.0.0.1 api.hourledger.local.com"
 )
 
 # Check if running as root
@@ -51,7 +51,7 @@ echo ""
 echo "Successfully added Tiago Apps local domains to $HOSTS_FILE"
 echo ""
 echo "You can now access:"
-echo "  - Landing Page: http://local.tiagoapps.com.br"
-echo "  - Customer App: http://app.local.tiagoapps.com.br"
-echo "  - Backoffice:   http://admin.local.tiagoapps.com.br"
-echo "  - API:          http://api.local.tiagoapps.com.br"
+echo "  - Landing Page: http://hourledger.local.com"
+echo "  - Customer App: http://app.hourledger.local.com"
+echo "  - Backoffice:   http://admin.hourledger.local.com"
+echo "  - API:          http://api.hourledger.local.com"

@@ -13,10 +13,10 @@
 #
 # sudo nano /etc/hosts
 # Add the following lines:
-# 127.0.0.1 local.tiagoapps.com.br
-# 127.0.0.1 app.local.tiagoapps.com.br
-# 127.0.0.1 admin.local.tiagoapps.com.br
-# 127.0.0.1 api.local.tiagoapps.com.br
+# 127.0.0.1 hourledger.local.com
+# 127.0.0.1 app.hourledger.local.com
+# 127.0.0.1 admin.hourledger.local.com
+# 127.0.0.1 api.hourledger.local.com
 
 # Default entries (required)
 127.0.0.1       localhost
@@ -28,10 +28,10 @@ ff02::2         ip6-allrouters
 
 # Tiago Apps Local Development Domains
 # These resolve to the nginx container within Docker network
-127.0.0.1       local.tiagoapps.com.br
-127.0.0.1       app.local.tiagoapps.com.br
-127.0.0.1       admin.local.tiagoapps.com.br
-127.0.0.1       api.local.tiagoapps.com.br
+127.0.0.1       hourledger.local.com
+127.0.0.1       app.hourledger.local.com
+127.0.0.1       admin.hourledger.local.com
+127.0.0.1       api.hourledger.local.com
 
 # Service hostnames (for inter-container communication)
 # These use Docker's internal DNS, but can be overridden here if needed

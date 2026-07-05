@@ -10,10 +10,10 @@
 # For production, use docker-compose.prod.example.yaml
 #
 # Domains:
-#   - local.tiagoapps.com.br       -> Landing Page (Nuxt 4)
-#   - app.local.tiagoapps.com.br   -> Customer Frontend (Vue 3)
-#   - admin.local.tiagoapps.com.br -> Backoffice (Nuxt 4)
-#   - api.local.tiagoapps.com.br   -> API (Laravel)
+#   - local.hourledger.local.com       -> Landing Page (Nuxt 4)
+#   - app.hourledger.local.com   -> Customer Frontend (Vue 3)
+#   - admin.hourledger.local.com -> Backoffice (Nuxt 4)
+#   - api.hourledger.local.com   -> API (Laravel)
 
 name: f2apps
 
@@ -53,10 +53,10 @@ services:
         networks:
             f2apps-network:
                 aliases:
-                    - local.tiagoapps.com.br
-                    - app.local.tiagoapps.com.br
-                    - admin.local.tiagoapps.com.br
-                    - api.local.tiagoapps.com.br
+                    - local.hourledger.local.com
+                    - app.hourledger.local.com
+                    - admin.hourledger.local.com
+                    - api.hourledger.local.com
         extra_hosts:
             - 'host.docker.internal:host-gateway'
 
@@ -167,13 +167,13 @@ services:
             # - ./docker/infra/etc-hosts:/etc/hosts:ro
         environment:
             NODE_ENV: development
-            VITE_API_URL: ${VITE_API_URL:-http://api.local.tiagoapps.com.br}
-            VITE_APP_URL: ${VITE_APP_URL:-http://app.local.tiagoapps.com.br}
+            VITE_API_URL: ${VITE_API_URL:-http://api.hourledger.local.com}
+            VITE_APP_URL: ${VITE_APP_URL:-http://app.hourledger.local.com}
             # Domain environment variables
-            VITE_SAAS_DOMAIN: ${VITE_SAAS_DOMAIN:-local.tiagoapps.com.br}
-            VITE_CUSTOMER_APP_DOMAIN: ${VITE_CUSTOMER_APP_DOMAIN:-app.local.tiagoapps.com.br}
-            VITE_BACKOFFICE_DOMAIN: ${VITE_BACKOFFICE_DOMAIN:-admin.local.tiagoapps.com.br}
-            VITE_API_DOMAIN: ${VITE_API_DOMAIN:-api.local.tiagoapps.com.br}
+            VITE_SAAS_DOMAIN: ${VITE_SAAS_DOMAIN:-local.hourledger.local.com}
+            VITE_CUSTOMER_APP_DOMAIN: ${VITE_CUSTOMER_APP_DOMAIN:-app.hourledger.local.com}
+            VITE_BACKOFFICE_DOMAIN: ${VITE_BACKOFFICE_DOMAIN:-admin.hourledger.local.com}
+            VITE_API_DOMAIN: ${VITE_API_DOMAIN:-api.hourledger.local.com}
         # command: sh -c "npm install && npm run dev -- --host 0.0.0.0"
         command: npm run dev -- --host
         networks:
@@ -202,13 +202,13 @@ services:
             # - ./docker/infra/etc-hosts:/etc/hosts:ro
         environment:
             NODE_ENV: development
-            NUXT_PUBLIC_API_URL: http://api.local.tiagoapps.com.br
-            NUXT_PUBLIC_APP_URL: http://local.tiagoapps.com.br
+            NUXT_PUBLIC_API_URL: http://api.hourledger.local.com
+            NUXT_PUBLIC_APP_URL: http://local.hourledger.local.com
             # Domain environment variables
-            NUXT_PUBLIC_SAAS_DOMAIN: local.tiagoapps.com.br
-            NUXT_PUBLIC_CUSTOMER_APP_DOMAIN: app.local.tiagoapps.com.br
-            NUXT_PUBLIC_BACKOFFICE_DOMAIN: admin.local.tiagoapps.com.br
-            NUXT_PUBLIC_API_DOMAIN: api.local.tiagoapps.com.br
+            NUXT_PUBLIC_SAAS_DOMAIN: local.hourledger.local.com
+            NUXT_PUBLIC_CUSTOMER_APP_DOMAIN: app.hourledger.local.com
+            NUXT_PUBLIC_BACKOFFICE_DOMAIN: admin.hourledger.local.com
+            NUXT_PUBLIC_API_DOMAIN: api.hourledger.local.com
         command: sh -c "npm install && npm run dev -- --host 0.0.0.0"
         profiles:
             - front
@@ -239,13 +239,13 @@ services:
             # - ./docker/infra/etc-hosts:/etc/hosts:ro
         environment:
             NODE_ENV: development
-            NUXT_PUBLIC_API_URL: http://api.local.tiagoapps.com.br
-            NUXT_PUBLIC_APP_URL: http://admin.local.tiagoapps.com.br
+            NUXT_PUBLIC_API_URL: http://api.hourledger.local.com
+            NUXT_PUBLIC_APP_URL: http://admin.hourledger.local.com
             # Domain environment variables
-            NUXT_PUBLIC_SAAS_DOMAIN: local.tiagoapps.com.br
-            NUXT_PUBLIC_CUSTOMER_APP_DOMAIN: app.local.tiagoapps.com.br
-            NUXT_PUBLIC_BACKOFFICE_DOMAIN: admin.local.tiagoapps.com.br
-            NUXT_PUBLIC_API_DOMAIN: api.local.tiagoapps.com.br
+            NUXT_PUBLIC_SAAS_DOMAIN: local.hourledger.local.com
+            NUXT_PUBLIC_CUSTOMER_APP_DOMAIN: app.hourledger.local.com
+            NUXT_PUBLIC_BACKOFFICE_DOMAIN: admin.hourledger.local.com
+            NUXT_PUBLIC_API_DOMAIN: api.hourledger.local.com
         command: sh -c "npm install && npm run dev -- --host 0.0.0.0"
         profiles:
             - front
