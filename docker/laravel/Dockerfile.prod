@@ -1,7 +1,7 @@
 # Laravel Production Dockerfile
-# PHP 8.3 optimized for performance
+# PHP 8.4 optimized for performance
 
-FROM php:8.3-fpm-alpine AS base
+FROM php:8.4-fpm-alpine AS base
 
 LABEL maintainer="Tiago Apps Production Team"
 LABEL description="Laravel API production environment"

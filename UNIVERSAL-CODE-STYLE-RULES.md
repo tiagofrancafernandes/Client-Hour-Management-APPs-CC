@@ -1,5 +1,5 @@
-# Universal Code Style Rules
-Version: 1.4
+# Universal Code Guidelines and Code Style Rules
+Version: 1.5
 
 Audience: Humans & AI Code Assistants
 Scope: Language-agnostic (C-like syntax used for examples)
@@ -126,7 +126,7 @@ function process(data) {
         }
     }
 }
-````
+```
 
 ✅ Correct
 

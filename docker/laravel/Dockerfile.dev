@@ -1,7 +1,7 @@
 # Laravel Development Dockerfile
-# PHP 8.3 with development tools and hot-reload support
+# PHP 8.4 with development tools and hot-reload support
 
-FROM php:8.3-fpm
+FROM php:8.4-fpm
 
 LABEL maintainer="Tiago Apps Development Team"
 LABEL description="Laravel API development environment"
