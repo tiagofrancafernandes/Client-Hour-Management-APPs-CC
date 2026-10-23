@@ -94,9 +94,15 @@ This system follows strict **append-only ledger** principles:
 - Use Vue Composition API with TypeScript.
 - Prefer API-driven components with minimal business logic in views/components.
 - Use centralized API communication in `services/api.ts`.
-- Respect configured path aliases from `vite.config.ts`.
+- Respect configured path aliases from `vite.config.ts` (`@`, `@@`, `@components`, `@composables`, `@utils`, `@types`, `@services`, `@views`, `@stores`, `@assets`, `@layouts`, `@plugins`).
 - For conditional classes in Vue, use object syntax instead of ternary operators.
 - TailwindCSS v4 uses `@import "tailwindcss"` and not `@tailwind` directives.
+- **Single Responsibility Principle (SRP) & File Size Limits**:
+  - Keep views and components lean, focused, and maintainable (ideally under 300–400 lines).
+  - Extract complex or recurring UI sections into dedicated components (`@components/` or `@/components/`).
+  - Extract stateful business logic, queries, and mutations into composables (`@composables/` or `@/composables/`).
+  - Extract pure functions, formatters, date/currency calculations, and parsers into utility modules (`@utils/` or `@/utils/`).
+  - Avoid nested relative imports (e.g. `../../../../`); always use configured aliases (`@/`, `@components/`, `@composables/`, `@utils/`).
 
 ## UI and Frontend Rules
 

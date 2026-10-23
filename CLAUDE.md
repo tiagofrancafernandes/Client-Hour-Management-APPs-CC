@@ -132,6 +132,12 @@ Direct ports: Frontend `:5173`, Landing `:3000`, Backoffice `:3001`
 - TailwindCSS v4 (uses `@import "tailwindcss"`, not `@tailwind` directives)
 - Object syntax for conditional classes (no ternary in `:class`)
 - API-driven, no business logic in components
+- **Single Responsibility Principle (SRP) & File Size**:
+  - Keep views and components small, focused, and maintainable (ideally under 300–400 lines).
+  - Extract reusable UI sections, modals, and complex elements into dedicated components in `@components/` or `@/components/`.
+  - Extract state, business logic, and API calls into composables in `@composables/` or `@/composables/`.
+  - Extract pure utilities, formatters, and calculations into `@utils/` or `@/utils/`.
+  - Use configured path aliases (`@/`, `@@/`, `@components/`, `@composables/`, `@utils/`, etc.) instead of deep relative paths (`../../..`).
 
 ## UI Design Reference
 
