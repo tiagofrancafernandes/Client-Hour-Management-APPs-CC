@@ -198,3 +198,4 @@ These rules are authoritative and non-negotiable.
 - If two implementations are valid, choose the most explicit and readable.
 
 If any instruction conflicts with `UNIVERSAL-CODE-STYLE-RULES.md`, **that file always takes precedence**.
+
