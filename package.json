@@ -16,6 +16,7 @@
         "dev": "npx -y concurrently -n docker,openineditor -c blue,green \"npm:dk:up\" \"npm:open-in-editor-server\"",
         "open-in-editor-server": "node frontend/open-in-editor-server.js",
         "dev:open-in-editor-server": "node frontend/open-in-editor-server.js",
+        "dev:open-in-editor-server:3333": "LISTEN_PORT=3333 node frontend/open-in-editor-server.js",
         "start": "npm run dk:up"
     },
     "devDependencies": {
